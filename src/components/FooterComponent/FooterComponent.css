@@ -1,0 +1,109 @@
+.footer {
+  margin-top: 40px;
+  background-color: #1a2b49;
+}
+
+.footer__contact {
+  height: 210px;
+  padding: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.footer__contact-name {
+  margin-right: 144px;
+}
+
+.footer__contact-text {
+  font-size: 14px;
+  color: #ffffff;
+}
+
+.footer__contact-heading {
+  margin: 24px 0;
+  font-size: 3.6rem;
+  color: #ffffff;
+}
+
+.footer__contact__input {
+  width: 250px;
+  height: 46px;
+  padding: 0 18px;
+  font-size: 1.8rem;
+  color: #ffffff;
+  border-radius: 100px;
+  outline: none;
+  border: none;
+}
+
+.footer__contact-submit-btn {
+  margin: 0 16px;
+  font-size: 1.8rem;
+  color: #ffffff;
+  padding: 8px 24px;
+  border-radius: 100px;
+  cursor: pointer;
+}
+
+.footer__inner {
+  padding: 35px 30px;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.footer__desc {
+  color: #ffffff;
+  font-size: 20px;
+  letter-spacing: 2px;
+  margin: 30px 0;
+}
+
+.footer__contact-logo {
+  text-decoration: none;
+  display: inline-block;
+  font-size: 2.2rem;
+  color: #ffffff;
+  margin-right: 12px;
+}
+
+.footer__list {
+  padding-left: 0;
+}
+
+.footer__list-heading {
+  text-transform: uppercase;
+  font-size: 16px;
+  color: #ffffff;
+  font-weight: 600;
+  margin: 25px 0 30px;
+}
+
+.footer__item {
+  font-size: 14px;
+  color: #ffffff;
+  list-style-type: none;
+  display: flex;
+  align-items: center;
+  padding: 6px 0;
+  position: relative;
+  left: 0;
+  transition: all linear 0.2s;
+}
+
+.footer__item:hover {
+  left: 8px;
+}
+
+.footer__item-icon {
+  font-size: 1rem;
+}
+
+.footer__item-link {
+  display: inline-block;
+  margin-left: 4px;
+  color: #ffffff;
+  text-decoration: none;
+}
