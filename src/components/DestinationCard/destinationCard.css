@@ -52,10 +52,12 @@
   /* justify-content: space-between;
   flex-wrap: nowrap; */
   transition: transform 0.3s ease;
+  gap: 25px;
 }
 
 .card_list1{
   flex-wrap: wrap;
+  gap: 24px 24px;
 }
 
  .list_card {
@@ -63,7 +65,7 @@
   height: 450px;
   border: solid 1px #dedfe3;
   box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.1);
-  margin-right: 25px;
+  /* margin-right: 25px; */
   border-radius: 4px;
 }
 

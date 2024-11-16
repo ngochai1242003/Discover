@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import "./SearchPopupComponent.css";
 import closeIcon from "../../assets/icon/close.svg";
+import axios from "axios";
 
 const SearchPopupComponent = () => {
   const [isPopupActive, setIsPopupActive] = useState(false);
@@ -21,15 +22,64 @@ const SearchPopupComponent = () => {
       [index]: !prevState[index],
     }));
   };
-// Search 
-const [query, setQuery] = useState('');
-const navigate = useNavigate();
+  // Search
+  const [query, setQuery] = useState("");
+  const navigate = useNavigate();
 
-const handleSearch = () => {
-  if (query.trim()) {
-    navigate(`/search-results?q=${query}`);
-  }
-};
+  const handleSearch = () => {
+    if (query.trim()) {
+      navigate(`/search-results?q=${query}`);
+    }
+  };
+
+  //filters
+  const [filters, setFilters] = useState({
+    location: [],
+    service: [],
+    category: [],
+    rating: [],
+    minPrice: "",
+    maxPrice: "",
+  });
+
+  const handleCheckboxChange = (e, category) => {
+    const { name, checked } = e.target;
+    setFilters((prevFilters) => {
+      const updatedCategory = checked
+        ? [...prevFilters[category], name]
+        : prevFilters[category].filter((item) => item !== name);
+      return { ...prevFilters, [category]: updatedCategory };
+    });
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      [name]: value,
+    }));
+  };
+
+  const handleFilterSearch = async () => {
+    try {
+      const response = await axios.post(
+        "http://localhost:4000/api/v1/filters/filter",
+        filters
+      );
+      if (response.data.type === "success") {
+        const selectedFilters = [];
+      if (filters.category.length > 0) selectedFilters.push(`Category: ${filters.category.join(", ")}`);
+      if (filters.minPrice || filters.maxPrice) selectedFilters.push(`Price Range: ${filters.minPrice} - ${filters.maxPrice}`);
+      if (filters.service.length > 0) selectedFilters.push(`Service: ${filters.service.join(", ")}`);
+      if (filters.rating.length > 0) selectedFilters.push(`Rating: ${filters.rating.join(", ")}`);
+      if (filters.location.length > 0) selectedFilters.push(`Location: ${filters.location.join(", ")}`);
+        navigate("/filter-results", { state: { data: response.data.docs, selectedFilters  } });
+        closePopup();
+      }
+    } catch (error) {
+      console.error("Lỗi khi lọc dữ liệu:", error);
+    }
+  };
 
   return (
     <main>
@@ -173,7 +223,6 @@ const handleSearch = () => {
         <button className="button_serch" onClick={handleSearch}>
           Tìm kiếm
         </button>
-
       </div>
 
       {isPopupActive && (
@@ -198,165 +247,78 @@ const handleSearch = () => {
             <main className="main_topup">
               <section className="section_main_topup">
                 <ul className="menu_main_topup">
-                  {/* <!--Địa điểm--> */}
+                  {/* Địa điểm */}
                   <li className="list_main_topup">
                     <h3
                       className="list_main_topup_title"
                       onClick={() => toggleSubMenu(0)}
                     >
                       <button className="topup_title_button">Địa điểm</button>
-                      {/* <i className="fas fa-angle-right dropdown"></i> */}
                       <i
                         className={`fas fa-angle-right dropdown ${
                           activeDropdown[0] ? "rotate" : ""
                         }`}
                       ></i>
                     </h3>
-
                     {activeDropdown[0] && (
                       <div className="list_main_topup_content">
-                        <div className="search_filter_items">
-                          <input
-                            className="search_filter_item_input"
-                            type="checkbox"
-                            name=""
-                            id=""
-                          />
-                          <label
-                            className="search_filter_item_label"
-                            htmlFor=""
-                          >
-                            Đà Nẵng
-                          </label>
-                        </div>
-
-                        <div className="search_filter_items">
-                          <input
-                            className="search_filter_item_input"
-                            type="checkbox"
-                            name=""
-                            id=""
-                          />
-                          <label
-                            className="search_filter_item_label"
-                            htmlFor=""
-                          >
-                            Huế
-                          </label>
-                        </div>
-
-                        <div className="search_filter_items">
-                          <input
-                            className="search_filter_item_input"
-                            type="checkbox"
-                            name=""
-                            id=""
-                          />
-                          <label
-                            className="search_filter_item_label"
-                            htmlFor=""
-                          >
-                            Hội An
-                          </label>
-                        </div>
-                        <label htmlFor=""></label>
-
-                        <div className="search_filter_items">
-                          <input
-                            className="search_filter_item_input"
-                            type="checkbox"
-                            name=""
-                            id=""
-                          />
-                          <label
-                            className="search_filter_item_label"
-                            htmlFor=""
-                          >
-                            Bà Nà Hills
-                          </label>
-                        </div>
+                        {["Đà Nẵng", "Huế", "Hội An", "Bà Nà Hills"].map(
+                          (location) => (
+                            <div key={location} className="search_filter_items">
+                              <input
+                                className="search_filter_item_input"
+                                type="checkbox"
+                                name={location}
+                                onChange={(e) =>
+                                  handleCheckboxChange(e, "location")
+                                }
+                              />
+                              <label className="search_filter_item_label">
+                                {location}
+                              </label>
+                            </div>
+                          )
+                        )}
                       </div>
                     )}
                   </li>
-                  {/* <!--Điểm đến--> */}
+
+                  {/* Điểm đến (Category) */}
                   <li className="list_main_topup">
                     <h3
                       className="list_main_topup_title"
                       onClick={() => toggleSubMenu(1)}
                     >
-                      <button className="topup_title_button">Điểm đến</button>
-                      {/* <i className="fas fa-angle-right dropdown"></i> */}
+                      <button className="topup_title_button">Doanh mục</button>
                       <i
                         className={`fas fa-angle-right dropdown ${
                           activeDropdown[1] ? "rotate" : ""
                         }`}
                       ></i>
                     </h3>
-
                     {activeDropdown[1] && (
                       <div className="list_main_topup_content">
-                        <div className="search_filter_items">
-                          <input
-                            className="search_filter_item_input"
-                            type="checkbox"
-                            name=""
-                            id=""
-                          />
-                          <label
-                            className="search_filter_item_label"
-                            htmlFor=""
-                          >
-                            Khách sạn
-                          </label>
-                        </div>
-
-                        <div className="search_filter_items">
-                          <input
-                            className="search_filter_item_input"
-                            type="checkbox"
-                            name=""
-                            id=""
-                          />
-                          <label
-                            className="search_filter_item_label"
-                            htmlFor=""
-                          >
-                            Ăn uống
-                          </label>
-                        </div>
-
-                        <div className="search_filter_items">
-                          <input
-                            className="search_filter_item_input"
-                            type="checkbox"
-                            name=""
-                            id=""
-                          />
-                          <label
-                            className="search_filter_item_label"
-                            htmlFor=""
-                          >
-                            Hoạt động
-                          </label>
-                        </div>
-
-                        <div className="search_filter_items">
-                          <input
-                            className="search_filter_item_input"
-                            type="checkbox"
-                            name=""
-                            id=""
-                          />
-                          <label
-                            className="search_filter_item_label"
-                            htmlFor=""
-                          >
-                            Tham quan
-                          </label>
-                        </div>
+                        {["Khách sạn", "Ăn uống", "Hoạt động", "Tham quan"].map(
+                          (category) => (
+                            <div key={category} className="search_filter_items">
+                              <input
+                                className="search_filter_item_input"
+                                type="checkbox"
+                                name={category}
+                                onChange={(e) =>
+                                  handleCheckboxChange(e, "category")
+                                }
+                              />
+                              <label className="search_filter_item_label">
+                                {category}
+                              </label>
+                            </div>
+                          )
+                        )}
                       </div>
                     )}
                   </li>
+
                   {/* Khoảng giá */}
                   <li className="list_main_topup">
                     <h3
@@ -370,33 +332,41 @@ const handleSearch = () => {
                         }`}
                       ></i>
                     </h3>
-
                     {activeDropdown[2] && (
                       <div className="list_main_topup_content">
                         <div className="price_input_wrapper">
                           <div>
                             <label className="price-label">Min. price</label>
                             <div className="price-input-container">
-                              <span>₫</span>
-                              <input type="number" placeholder="0" min="0" />
+                            <span>₫</span>
+                            <input
+                              type="number"
+                              name="minPrice"
+                              placeholder="0Đ"
+                              value={filters.minPrice}
+                              onChange={handleInputChange}
+                            />
                             </div>
                           </div>
 
                           <div>
                             <label className="price-label">Max. price</label>
                             <div className="price-input-container">
-                              <span>₫</span>
-                              <input
-                                type="number"
-                                placeholder="100.000.000Đ"
-                                min="0"
-                              />
+                            <span>₫</span>
+                            <input
+                              type="number"
+                              name="maxPrice"
+                              placeholder="100.000.0000Đ"
+                              value={filters.maxPrice}
+                              onChange={handleInputChange}
+                            />
                             </div>
                           </div>
                         </div>
                       </div>
                     )}
                   </li>
+
                   {/* Dịch vụ */}
                   <li className="list_main_topup">
                     <h3
@@ -410,40 +380,29 @@ const handleSearch = () => {
                         }`}
                       ></i>
                     </h3>
-
                     {activeDropdown[3] && (
                       <div className="list_main_topup_content">
-                        <div className="search_filter_items">
-                          <input
-                            className="search_filter_item_input"
-                            type="checkbox"
-                            id="service1"
-                          />
-                          <label
-                            className="search_filter_item_label"
-                            htmlFor="service1"
-                          >
-                            Có dịch vụ đưa đón
-                          </label>
-                        </div>
-
-                        <div className="search_filter_items">
-                          <input
-                            className="search_filter_item_input"
-                            type="checkbox"
-                            id="service2"
-                          />
-                          <label
-                            className="search_filter_item_label"
-                            htmlFor="service2"
-                          >
-                            {" "}
-                            Không có dịch vụ đưa đón{" "}
-                          </label>
-                        </div>
+                        {["Có dịch vụ đưa đón", "Không có dịch vụ đưa đón"].map(
+                          (service) => (
+                            <div key={service} className="search_filter_items">
+                              <input
+                                className="search_filter_item_input"
+                                type="checkbox"
+                                name={service}
+                                onChange={(e) =>
+                                  handleCheckboxChange(e, "service")
+                                }
+                              />
+                              <label className="search_filter_item_label">
+                                {service}
+                              </label>
+                            </div>
+                          )
+                        )}
                       </div>
                     )}
                   </li>
+
                   {/* Xếp hạng */}
                   <li className="list_main_topup">
                     <h3
@@ -457,50 +416,23 @@ const handleSearch = () => {
                         }`}
                       ></i>
                     </h3>
-
                     {activeDropdown[4] && (
                       <div className="list_main_topup_content">
-                        <div className="search_filter_items">
-                          <input
-                            className="search_filter_item_input"
-                            type="checkbox"
-                            id="rating3"
-                          />
-                          <label
-                            className="search_filter_item_label"
-                            htmlFor="rating3"
-                          >
-                            3.0+
-                          </label>
-                        </div>
-
-                        <div className="search_filter_items">
-                          <input
-                            className="search_filter_item_input"
-                            type="checkbox"
-                            id="rating4"
-                          />
-                          <label
-                            className="search_filter_item_label"
-                            htmlFor="rating4"
-                          >
-                            4.0+
-                          </label>
-                        </div>
-
-                        <div className="search_filter_items">
-                          <input
-                            className="search_filter_item_input"
-                            type="checkbox"
-                            id="rating5"
-                          />
-                          <label
-                            className="search_filter_item_label"
-                            htmlFor="rating5"
-                          >
-                            5.0+
-                          </label>
-                        </div>
+                        {[3, 4, 5].map((rating) => (
+                          <div key={rating} className="search_filter_items">
+                            <input
+                              className="search_filter_item_input"
+                              type="checkbox"
+                              name={rating}
+                              onChange={(e) =>
+                                handleCheckboxChange(e, "rating")
+                              }
+                            />
+                            <label className="search_filter_item_label">
+                              {rating}.0+
+                            </label>
+                          </div>
+                        ))}
                       </div>
                     )}
                   </li>
@@ -509,8 +441,24 @@ const handleSearch = () => {
             </main>
 
             <footer className="popup_content">
-              <button className="popup_reset_all">Thiết lập lại tất cả </button>
-              <button className="popup_search">Hiển thị kết quả</button>
+              <button
+                className="popup_reset_all"
+                onClick={() =>
+                  setFilters({
+                    location: [],
+                    service: [],
+                    category: [],
+                    rating: [],
+                    minPrice: "",
+                    maxPrice: "",
+                  })
+                }
+              >
+                Thiết lập lại tất cả
+              </button>
+              <button className="popup_search" onClick={handleFilterSearch}>
+                Hiển thị kết quả
+              </button>
             </footer>
           </div>
 
