@@ -1,16 +1,18 @@
 import React from "react";
 import "./HeaderComponent.css";
+import { useNavigate } from 'react-router-dom';
+import logo from '../../assets/img/logo.png'
 const HeaderComponent = () => {
+  const navigate = useNavigate();
   return (
     <header className="header">
       <nav className="navbar">
         <div className="container">
           <div className="wrapper">
-            <div className="navbar_logo">
+            <div className="navbar_logo" onClick={() => navigate('/')}>
               <img
                 className="logo"
-                src="./assets/img/Screenshot_2024-10-05_002836-removebg-preview.png"
-                alt=""
+                src={logo}
               />
             </div>
 
@@ -79,7 +81,7 @@ const HeaderComponent = () => {
             </ul>
 
             <div className="buttons-container">
-              <button className="btn login-btn">
+              <button className="btn login-btn" onClick={() => navigate('/login')}>
                 <svg
                   width="14"
                   height="14"
@@ -94,7 +96,7 @@ const HeaderComponent = () => {
                 </svg>
                 Đăng nhập   
               </button>
-              <button className="btn register-btn">Đăng ký</button>
+              <button className="btn register-btn" onClick={() => navigate('/register')}>Đăng ký</button>
             </div>
           </div>
         </div>

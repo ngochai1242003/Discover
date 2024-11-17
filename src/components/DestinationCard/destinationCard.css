@@ -52,12 +52,12 @@
   /* justify-content: space-between;
   flex-wrap: nowrap; */
   transition: transform 0.3s ease;
-  gap: 25px;
+  gap: 26px;
 }
 
 .card_list1{
   flex-wrap: wrap;
-  gap: 24px 24px;
+  gap: 24px 26px;
 }
 
  .list_card {
@@ -115,6 +115,12 @@
 .card_content .card_info {
   padding: 0 20px;
   margin-top: 10px;
+}
+
+.card_content .card_info li {
+  white-space: nowrap;        
+  overflow: hidden;           
+  text-overflow: ellipsis;
 }
 
 .card_content .price {

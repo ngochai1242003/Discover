@@ -13,7 +13,7 @@
   top: 0;
   width: 100%;
   z-index: 99999;
-  transition: background-color 0.3s ease; /* Hiệu ứng chuyển nền mượt */
+  transition: background-color 0.3s ease; 
 }
 
 /* Sticky Navbar */
@@ -39,6 +39,7 @@
 .navbar_logo img {
   width: 115px;
   height: 95px;
+  cursor: pointer;
 }
 
 /* Menu */

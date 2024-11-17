@@ -2,7 +2,7 @@ import React from "react";
 import "./destinationCard.css";
 
 const DestinationCard = ({ destinations }) => {
-  if (!destinations || destinations.length === 0) {
+  if (!Array.isArray(destinations) || destinations.length === 0) {
     return <p>Không có địa điểm nào để hiển thị</p>;
   }
 
@@ -42,7 +42,7 @@ const DestinationCard = ({ destinations }) => {
               <div className="card_info">
                 <li>{destination.distance}</li>
                 <li>{destination.service}</li>
-                <li>{destination.open_hours}</li>
+                <li>{destination.open_hours} - {destination.close_hours} </li>
               </div>
               <div className="price">
                 <p>{`VND ${destination.price.toLocaleString()}`}</p>

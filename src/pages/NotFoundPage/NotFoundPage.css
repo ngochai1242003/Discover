@@ -1,0 +1,106 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: consolas;
+  }
+  
+  .error {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    background: linear-gradient(0deg, #fff, #03a9f4);
+    position: relative;
+  }
+  
+  .sky {
+    position: relative;
+    width: 100%;
+    height: 60vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .sky h2 {
+    font-size: 16em;
+    color: #fff;
+    text-shadow: 15px 15px 0 rgba(0, 0, 0, 0.1);
+  }
+  
+  .sky h2 span {
+    display: inline-block;
+    animation: animate 2s ease-in-out infinite;
+  }
+  
+  .sky h2 span:nth-child(even) {
+    animation-delay: -1s;
+  }
+  
+  @keyframes animate {
+    0%,
+    100% {
+      transform: translateY(-50px);
+    }
+    50% {
+      transform: translateY(50px);
+    }
+  }
+  
+  .field {
+    width: 100%;
+    padding: 100px;
+    height: 40vh;
+    background: #6e2308;
+    box-shadow: inset 0 20px 10px #51680c;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+  }
+  
+  .field h2 {
+    color: #fff;
+    font-size: 2em;
+    margin-bottom: 20px;
+  }
+  
+  .field a {
+    background: #fff;
+    color: #000;
+    width: 160px;
+    height: 50px;
+    line-height: 50px;
+    border-radius: 50px;
+    display: inline-block;
+    text-decoration: none;
+    font-size: 20px;
+  }
+  
+  .plane {
+    position: absolute;
+    bottom: 20%;
+    left: 180px;
+    max-width: 350px;
+  }
+  
+  .grass {
+    position: absolute;
+    bottom: -150px;
+    left: 0;
+    width: 100%;
+    height: 280px;
+    overflow: hidden;
+    z-index: 1;
+  }
+  
+  .grass img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    animation: animateGrass 1s linear infinite;
+  }
+  
+  
+  
