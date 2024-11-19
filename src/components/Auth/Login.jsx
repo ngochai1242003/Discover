@@ -1,61 +1,45 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { login } from "../services/authService";
-import "./Auth.css";
+import axios from "axios";
 
 const Login = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [formData, setFormData] = useState({ username: "", password: "" });
   const navigate = useNavigate();
 
-  const handleLogin = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Gọi API login
-      const response = await login(username, password);
-      localStorage.setItem("token", response.accessToken);
+      const response = await axios.post("http://localhost:4000/api/v1/auth/login", formData);
       alert("Đăng nhập thành công!");
+      console.log(response.data);
       navigate("/");
-    } catch (err) {
-      setError(err.message || "Đăng nhập thất bại, vui lòng thử lại.");
+    } catch (error) {
+      alert(error.response?.data?.message || "Đăng nhập thất bại");
     }
   };
 
   return (
-    <div className="wrapper_auth">
-
-    <div className="container1">
-      <div id="loginForm" className="form-container">
-        <h2>Đăng nhập</h2>
-        <form id="login-form" onSubmit={handleLogin}>
-          <div className="form-group">
-            <label>Tên người dùng</label>
-            <input
-              type="text"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="loginPassword">Mật khẩu</label>
-            <input
-              type="password"
-              id="loginPassword"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </div>
-          {error && <p className="error-message">{error}</p>}
-          <button className="btn_login" type="submit">Đăng nhập</button>
-        </form>
-        <div className="switch-form">
-          <a href="/register">Chưa có tài khoản? Đăng ký ngay</a>
-        </div>
-      </div>
-    </div>
+    <div>
+      <h2>Login</h2>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          placeholder="Username"
+          onChange={(e) => setFormData({ ...formData, username: e.target.value })}
+          required
+        />
+        <input
+          type="password"
+          placeholder="Password"
+          onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+          required
+        />
+        <button type="submit">Login</button>
+      </form>
+      <p>
+        Chưa có tài khoản?{" "}
+        <button onClick={() => navigate("/register")}>Đăng ký</button>
+      </p>
     </div>
   );
 };

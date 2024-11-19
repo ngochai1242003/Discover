@@ -6,6 +6,7 @@ import SearchResultsPage from "../pages/SearchResultsPage/SearchResultsPage";
 import Login from "../components/Auth/Login";
 import Register from "../components/Auth/Register";
 import DestinationDetail from "../components/DestinationDetail/DestinationDetail";
+import VerifyOtp from "../components/Auth/VerifyOtp";
 
 export const routes = [
     {
@@ -35,6 +36,12 @@ export const routes = [
     {
         path: "/register",
         page: Register,
+        isShowHeader: false  
+    },
+
+    {
+        path: "/verify",
+        page: VerifyOtp,
         isShowHeader: false  
     },
     {

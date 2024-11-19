@@ -1,96 +1,76 @@
 import React, { useState } from "react";
-// import { useNavigate } from "react-router-dom";
-import { register } from "../services/authService";
-import "./Auth.css";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Register = () => {
   const [formData, setFormData] = useState({
     username: "",
     email: "",
+    phone: "",
     password: "",
-    confirmPassword: "",
+    otp: "",
   });
-  const [message, setMessage] = useState("");
-  const [error, setError] = useState("");
-  //   const navigate = useNavigate();
+  const navigate = useNavigate();
 
-  // Xử lý thay đổi dữ liệu form
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  const handleOTP = async () => {
+    try {
+      await axios.post("http://localhost:4000/api/v1/sendOtp/send-otp", { email: formData.email });
+      alert("OTP đã được gửi!");
+    } catch (error) {
+      alert(error.response?.data?.message || "Lỗi gửi OTP");
+    }
   };
 
-  const handleRegister = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await register(formData);
-      setMessage(response.message);
-      alert(
-        "Đăng ký thành công! Vui lòng kiểm tra email để xác thực tài khoản."
-      );
-    } catch (err) {
-      setError(err.message || "Đăng ký thất bại.");
+      await axios.post("http://localhost:4000/api/v1/auth/signup", formData);
+      alert("Đăng ký thành công! Chuyển về trang đăng nhập.");
+      navigate("/login");
+    } catch (error) {
+      alert(error.response?.data?.message || "Đăng ký thất bại");
     }
   };
 
   return (
-    <div className="wrapper_auth">
-      <div className="container1">
-        <div id="registerForm" className="form-container">
-          <h2>Đăng ký</h2>
-          <form id="register-form" onSubmit={handleRegister}>
-            <div className="form-group">
-              <label htmlFor="regUsername">Tên người dùng</label>
-              <input
-                type="text"
-                id="regUsername"
-                name="username"
-                value={formData.username}
-                onChange={handleChange}
-                required
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="regEmail">Email</label>
-              <input
-                type="email"
-                id="regEmail"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                required
-              />
-            </div>
-            <div className="form-group">
-              <label>Số điện thoại</label>
-              <input
-                type="text"
-                name="phone"
-                value={formData.phone}
-                onChange={handleChange}
-                required
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="regPassword">Mật khẩu</label>
-              <input
-                type="password"
-                id="regPassword"
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
-                required
-              />
-            </div>
-            {error && <p className="error-message">{error}</p>}
-            <button className="btn_login" type="submit">
-              Đăng ký
-            </button>
-          </form>
-          <div className="switch-form">
-            <a href="/login">Đã có tài khoản? Đăng nhập</a>
-          </div>
-        </div>
-      </div>
+    <div>
+      <h2>Register</h2>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          placeholder="Username"
+          onChange={(e) => setFormData({ ...formData, username: e.target.value })}
+          required
+        />
+        <input
+          type="email"
+          placeholder="Email"
+          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+          required
+        />
+        <input
+          type="text"
+          placeholder="Phone"
+          onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+          required
+        />
+        <input
+          type="password"
+          placeholder="Password"
+          onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+          required
+        />
+        <button type="button" onClick={handleOTP}>
+          Gửi OTP
+        </button>
+        <input
+          type="text"
+          placeholder="OTP"
+          onChange={(e) => setFormData({ ...formData, otp: e.target.value })}
+          required
+        />
+        <button type="submit">Register</button>
+      </form>
     </div>
   );
 };
