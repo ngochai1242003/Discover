@@ -172,3 +172,82 @@
   background-color: rgba(255, 255, 255, 0.2);
   transform: scale(1.05); /* Tăng kích thước nhẹ khi hover */
 }
+
+
+/*dropdown*/
+/* Dropdown Menu */
+.MuiPaper-root {
+  position: relative;
+  border-radius: 8px; 
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); 
+  background-color: #ffffff; 
+  min-width: 200px; 
+  animation: fadeInDropdown 0.3s ease; 
+}
+
+/* Hiệu ứng mượt khi dropdown mở */
+@keyframes fadeInDropdown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px); 
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Mũi tên chỉ vào avatar */
+/* .MuiPaper-root::before {
+  content: "";
+  position: absolute;
+  top: -10px; 
+  left: 50%; 
+  transform: translateX(-50%); 
+  border-width: 10px; 
+  border-style: solid;
+  border-color: transparent transparent #ffffff transparent; 
+  z-index: 1000; 
+} */
+
+/* Dropdown Item */
+.MuiMenuItem-root {
+  font-size: 14px; 
+  font-weight: 500;
+  padding: 12px 16px; 
+  color: #333333; 
+  transition: background-color 0.2s ease, color 0.2s ease; 
+  display: flex;
+  align-items: center;
+  gap: 10px; 
+}
+
+/* Hover Effect */
+.MuiMenuItem-root:hover {
+  background-color: #f0f0f0; 
+  color: #0194f3; 
+}
+
+/* Border giữa các mục */
+.MuiMenuItem-root:not(:last-child) {
+  border-bottom: 1px solid #e0e0e0; 
+}
+
+/* Avatar Hover */
+.user-info .MuiAvatar-root {
+  width: 50px;
+  height: 50px;
+  background-color:#FFD1DC;
+
+  text-transform: uppercase;
+  transition: transform 0.2s ease;
+}
+
+.user-info .MuiAvatar-root:hover {
+  transform: scale(1.1); 
+}
+
+
+
+
+

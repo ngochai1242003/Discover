@@ -5,6 +5,7 @@
     justify-content: center;
     align-items: center;
     min-height: 100vh;
+    background: url('../../assets/img/danang.jpg') no-repeat center center fixed;
 }
 
 .container1 {
@@ -15,20 +16,46 @@
     /* width: 100%; */
     max-width: 400px;
     
+    
 }
 
-.form-container {
-    margin-bottom: 20px;
-}
 
-h2 {
+.h2_login {
     text-align: center;
     margin-bottom: 20px;
     color: #1a73e8;
+    font-size: 25px;
 }
 
 .form-group {
     margin-bottom: 15px;
+}
+
+.form-group1{
+    display: flex;
+    justify-content: space-between; /* Tạo khoảng cách giữa nút và input */
+    align-items: center; /* Căn giữa theo chiều dọc */
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.form-group1_button{
+    padding: 10px 15px;
+    background-color: #1a73e8;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.form-group1_input{
+    flex: 1; /* Để input chiếm toàn bộ không gian còn lại */
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
 }
 
 label {
