@@ -1,16 +1,26 @@
 import React from "react";
 import "./destinationCard.css";
+import { useNavigate } from "react-router-dom";
+
 
 const DestinationCard = ({ destinations }) => {
   if (!Array.isArray(destinations) || destinations.length === 0) {
     return <p>Không có địa điểm nào để hiển thị</p>;
   }
 
+  const navigate = useNavigate();
+
+  const handleCardClick = (id) => {
+    navigate(`/destination-detail/${id}`);
+  };
+
   return (
     <>
       {destinations.map((destination, index) => (
         <div className="list_card" key={index}>
-          <a href="#">
+          <a key={destination._id}
+          className="card"
+          onClick={() => handleCardClick(destination._id)}>
             <div className="card_img">
               <img src={destination.img_url} alt={destination.name} />
 

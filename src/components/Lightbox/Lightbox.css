@@ -1,0 +1,221 @@
+.title_linkPage {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 10px;
+    font-size: 16px;
+  }
+  .info_destination_detail {
+  }
+  
+  .info_destination_detail_name {
+    font-size: 30px;
+    margin-bottom: 16px;
+  }
+  
+  .rating_wishlist {
+    display: flex;
+    justify-content: space-between;
+    font-size: 18px;
+  }
+  .rating_wishlist_left {
+    display: flex;
+    gap: 2px;
+    /* font-size: 18px; */
+    align-items: center;
+  }
+  
+  .rating_wishlist_left img {
+    width: 18px;
+    height: 18px;
+  }
+  
+  .rating_wishlist_right {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 24px;
+  }
+  .wishlist_right {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .share_right {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  
+  /* grid img */
+  .grid_img_destination_detail {
+    display: grid;
+    grid-template-columns: 3fr 1fr 1fr;
+    grid-template-rows: repeat(2, 1fr);
+    gap: 10px;
+    grid-template-areas:
+      "large small1 small2"
+      "large small3 small4";
+    margin: 0 auto;
+    position: relative;
+    border-radius: 4px; /* Bo góc cho toàn bộ grid */
+    overflow: hidden;
+    max-width: 1200px;
+  }
+  
+  .grid-item {
+    position: relative;
+    cursor: pointer;
+  }
+  
+  .grid-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+
+  }
+  
+  .large {
+    grid-area: large;
+    aspect-ratio: 1.5 / 1;
+  }
+  
+  /* Nút more-button */
+  .more-button {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
+    padding: 10px 15px;
+    border-radius: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+  }
+  
+  .more-button span {
+    pointer-events: none;
+  }
+  
+  /* Lightbox styles */
+  .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: none;
+  }
+  
+  .lightbox {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    background: rgba(0, 0, 0, 0.8);
+    align-items: center;
+    justify-content: center;
+  
+    opacity: 0;
+    transform: scale(0.8);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+  
+  .lightbox.show {
+      display: flex;
+      opacity: 1;
+      transform: scale(1);
+    }
+  
+  .lightbox-content {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80%;
+    height: 80%;
+  }
+  
+  .lightbox-content img {
+    width: 80%;
+    height: 80%;
+    object-fit: cover;
+  
+    opacity: 0;
+    transform: scale(0.95) translateX(100%); /* Di chuyển ảnh mới từ bên phải */
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+  
+  .lightbox-content img.show {
+      opacity: 1;
+      transform: scale(1) translateX(0);
+    }
+
+    .lightbox-content img.hide {
+      opacity: 0; /* Ẩn ảnh cũ */
+      transform: scale(0.95) translateX(-100%); /* Di chuyển ảnh cũ ra bên trái */
+    }
+  
+  .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    font-size: 50px;
+    color: white;
+    transition: color 0.3s ease;
+  }
+
+  .close-btn:hover{
+    color: rgba(247, 87, 87, 0.7);
+  }
+  
+  .navigation {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 24px;
+    color: white;
+    padding: 15px; 
+    width: 50px; 
+    height: 50px;
+    background: rgba(25, 27, 32, 0.6); 
+    border: 2px solid #fff; 
+    border-radius: 50%; 
+    display: flex; 
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); 
+    transition: transform 0.2s ease, background-color 0.3s ease;
+  }
+  
+  .navigation:hover {
+    background: rgba(255, 255, 255, 0.8); 
+    color: #191b20; 
+  }
+  
+  .prev {
+    left: 0; 
+  }
+  
+  .next_lightboxImage {
+    right: 0; 
+  }
+  
+  
+  .image-index {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: white;
+    font-size: 18px;
+  }
+  

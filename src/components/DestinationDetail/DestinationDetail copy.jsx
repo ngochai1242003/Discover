@@ -4,9 +4,6 @@ import axios from 'axios';
 import './destinationDetail.css';
 import SearchPopupComponent from '../SearchPopupComponent/SearchPopupComponent';
 import banner from "../../assets/img/banner2.jpg";
-import Lightbox from '../Lightbox/Lightbox';
-import '../Lightbox/Lightbox.css'
-import { Link } from "react-router-dom";
 const DestinationDetail = () => {
   const { id } = useParams(); // Lấy id từ URL
   const [destination, setDestination] = useState(null);
@@ -18,7 +15,6 @@ const DestinationDetail = () => {
         setDestination(response.data);
       } catch (error) {
         console.error('Error fetching destination details:', error);
-        setLoading(false);
       }
     };
     fetchDestinationDetail();
@@ -36,37 +32,17 @@ const DestinationDetail = () => {
           <p>Rong chơi bốn phương, tìm kiếm "yêu thương"</p>
         </div>
     <SearchPopupComponent/>
-
+    
     <div className="container">
-      <div className="title_linkPage">
-      <Link to="/">Home</Link>
-        <span>&gt;</span>
-        <a href="">{destination.name}</a>
-      </div>
-
-      <section className="info_destination_detail">
-        <h1 className="info_destination_detail_name">
-        {destination.name}
-        </h1>
-        <div className="rating_wishlist">
-          <div className="rating_wishlist_left">
-            <span>4.6 / 5</span>
-            <img src="./assets/icon/star.svg" alt="" />
-          </div>
-          <div className="rating_wishlist_right">
-            <div className="wishlist_right">
-              <img src="./assets/icon/ph_heart-bold.svg" alt="" />
-              <p>Wishlist</p>
-            </div>
-            <div className="share_right">
-              <img src="./assets/icon/ph_heart-bold.svg" alt="" />
-              <p>Share</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <Lightbox images={destination.img_url} />
+      <h2>{destination.name}</h2>
+      <img src={destination.img_url} alt={destination.name} />
+      <p>{destination.description}</p>
+      <ul>
+        <li>Khoảng cách: {destination.distance}</li>
+        <li>Dịch vụ: {destination.service}</li>
+        <li>Giờ mở cửa: {destination.open_hours}</li>
+        <li>Đánh giá: {destination.rating}</li>
+      </ul>
     </div>
     </>
   );
