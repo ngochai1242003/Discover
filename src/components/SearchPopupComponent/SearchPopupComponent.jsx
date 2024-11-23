@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useNavigate } from 'react-router-dom';
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./SearchPopupComponent.css";
 import closeIcon from "../../assets/icon/close.svg";
 
@@ -21,15 +21,15 @@ const SearchPopupComponent = () => {
       [index]: !prevState[index],
     }));
   };
-// Search 
-const [query, setQuery] = useState('');
-const navigate = useNavigate();
+  // Search
+  const [query, setQuery] = useState("");
+  const navigate = useNavigate();
 
-const handleSearch = () => {
-  if (query.trim()) {
-    navigate(`/search-results?q=${query}`);
-  }
-};
+  const handleSearch = () => {
+    if (query.trim()) {
+      navigate(`/search-results?q=${query}`);
+    }
+  };
 
   return (
     <main>
@@ -43,8 +43,8 @@ const handleSearch = () => {
             xmlns="http://www.w3.org/2000/svg"
           >
             <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
+              fillRule="evenodd"
+              clipRule="evenodd"
               d="M0.125 1.6875C0.125 1.2731 0.28962 0.875671 0.582646 0.582646C0.875671 0.28962 1.2731 0.125 1.6875 0.125H17.3125C17.7269 0.125 18.1243 0.28962 18.4174 0.582646C18.7104 0.875671 18.875 1.2731 18.875 1.6875V3.86042C18.8749 4.41291 18.6553 4.94272 18.2646 5.33333L12.625 10.9729V18.7062C12.625 18.9016 12.5751 19.0937 12.48 19.2643C12.3849 19.4349 12.2478 19.5784 12.0816 19.6811C11.9154 19.7838 11.7258 19.8423 11.5307 19.8511C11.3355 19.8599 11.1414 19.8186 10.9667 19.7312L7.09479 17.7958C6.87851 17.6877 6.69661 17.5215 6.56948 17.3158C6.44235 17.1101 6.37501 16.8731 6.375 16.6313V10.9729L0.735417 5.33333C0.344689 4.94272 0.125118 4.41291 0.125 3.86042V1.6875Z"
               fill="#414141"
             />
@@ -63,9 +63,9 @@ const handleSearch = () => {
             <path
               d="M21.875 21.875L17.351 17.351M17.351 17.351C18.1249 16.5772 18.7387 15.6585 19.1575 14.6474C19.5763 13.6363 19.7919 12.5527 19.7919 11.4583C19.7919 10.3639 19.5763 9.28027 19.1575 8.26919C18.7387 7.25812 18.1249 6.33944 17.351 5.5656C16.5772 4.79175 15.6585 4.17791 14.6474 3.75911C13.6363 3.34031 12.5527 3.12476 11.4583 3.12476C10.3639 3.12476 9.28027 3.34031 8.26919 3.75911C7.25812 4.17791 6.33944 4.79175 5.5656 5.5656C4.00275 7.12844 3.12476 9.24811 3.12476 11.4583C3.12476 13.6685 4.00275 15.7882 5.5656 17.351C7.12844 18.9139 9.24811 19.7919 11.4583 19.7919C13.6685 19.7919 15.7882 18.9139 17.351 17.351Z"
               stroke="#414141"
-              stroke-width="2.08333"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeWidth="2.08333"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             />
           </svg>
           <input
@@ -89,15 +89,15 @@ const handleSearch = () => {
               >
                 <path
                   d="M3.125 7.29165V18.75C3.125 20.7146 3.125 21.6958 3.73542 22.3062C4.34583 22.9166 5.32708 22.9166 7.29167 22.9166H17.7083C19.6729 22.9166 20.6542 22.9166 21.2646 22.3062C21.875 21.6958 21.875 20.7146 21.875 18.75V7.29165M17.7083 7.29165C17.7083 5.91031 17.1596 4.58555 16.1828 3.6088C15.2061 2.63205 13.8813 2.08331 12.5 2.08331C11.1187 2.08331 9.7939 2.63205 8.81715 3.6088C7.8404 4.58555 7.29167 5.91031 7.29167 7.29165"
-                  stroke-width="1.5625"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeWidth="1.5625"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                 />
                 <path
                   d="M14.5833 22.9167V18.75C14.5833 18.1975 14.3638 17.6676 13.9731 17.2769C13.5824 16.8862 13.0525 16.6667 12.5 16.6667C11.9474 16.6667 11.4175 16.8862 11.0268 17.2769C10.6361 17.6676 10.4166 18.1975 10.4166 18.75V22.9167M9.37498 3.125H4.65831C4.3354 3.125 4.00727 3.21042 3.7479 3.46771C2.97498 4.23333 2.52915 5.50833 2.08331 7.29167H7.29165M15.625 3.125H20.3416C20.6646 3.125 20.9927 3.21042 21.2521 3.46771C22.025 4.23333 22.4708 5.50833 22.9166 7.29167H17.7083M6.24998 11.4583H6.77081M6.24998 15.1042H6.77081M18.2291 11.4583H18.75M18.2291 15.1042H18.75M10.9375 8.33333V9.89583M10.9375 9.89583V11.4583M10.9375 9.89583H14.0625M14.0625 8.33333V9.89583M14.0625 9.89583V11.4583"
-                  stroke-width="1.5625"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeWidth="1.5625"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                 />
               </svg>
               <a href="#khachsan">Khách sạn</a>
@@ -146,26 +146,26 @@ const handleSearch = () => {
                 <path
                   d="M12.5 2.08331C10.8424 2.08331 9.25269 2.74179 8.08058 3.9139C6.90848 5.086 6.25 6.67571 6.25 8.33331C6.25 9.81144 6.56458 10.7791 7.42187 11.8489L12.5 17.7083L17.5781 11.8489C18.4354 10.7791 18.75 9.81144 18.75 8.33331C18.75 6.67571 18.0915 5.086 16.9194 3.9139C15.7473 2.74179 14.1576 2.08331 12.5 2.08331Z"
                   stroke="black"
-                  stroke-width="2.08333"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeWidth="2.08333"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                 />
                 <path
                   d="M5.20837 15.7739C3.28025 16.5312 2.08337 17.5843 2.08337 18.75C2.08337 21.0521 6.74692 22.9166 12.5 22.9166C18.2532 22.9166 22.9167 21.0521 22.9167 18.75C22.9167 17.5843 21.7198 16.5312 19.7917 15.7739"
                   stroke="black"
-                  stroke-width="2.08333"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeWidth="2.08333"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                 />
                 <path
                   d="M12.5 9.37496C13.0753 9.37496 13.5417 8.90859 13.5417 8.33329C13.5417 7.758 13.0753 7.29163 12.5 7.29163C11.9247 7.29163 11.4584 7.758 11.4584 8.33329C11.4584 8.90859 11.9247 9.37496 12.5 9.37496Z"
                   stroke="black"
-                  stroke-width="2.08333"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeWidth="2.08333"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                 />
               </svg>
-              <a href="#thamquan">Tham quan</a>
+              <a href="/findDestination">Tham quan</a>
             </li>
           </ul>
         </div>
@@ -173,7 +173,6 @@ const handleSearch = () => {
         <button className="button_serch" onClick={handleSearch}>
           Tìm kiếm
         </button>
-
       </div>
 
       {isPopupActive && (
