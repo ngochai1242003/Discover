@@ -2,19 +2,16 @@ import React, { useState } from "react";
 import "./destinationCard.css";
 import { useNavigate } from "react-router-dom";
 
-
-const DestinationCard = ({ destinations, wishlist, toggleWishlist }) => {
+const DestinationCard = ({ destinations}) => {
   if (!Array.isArray(destinations) || destinations.length === 0) {
     return <p>Không có địa điểm nào để hiển thị</p>;
   }
 
   const navigate = useNavigate();
 
-
   const handleCardClick = (id) => {
     navigate(`/destination-detail/${id}`);
   };
-
 
   // console.log(destinations.map((destination) => destination._id));
 
@@ -22,16 +19,13 @@ const DestinationCard = ({ destinations, wishlist, toggleWishlist }) => {
     <>
       {destinations.map((destination) => (
         <div className="list_card" key={destination._id}>
-          <a
-          className="card"
-          onClick={() => handleCardClick(destination._id)}>
+          <a className="card" onClick={() => handleCardClick(destination._id)}>
             <div className="card_img">
-            {destination.img_url && destination.img_url.length > 0 ? (
-    <img src={destination.img_url[0]} alt={destination.name} />
-  ) : (
-    <p>Ảnh không khả dụng</p>
-  )}
-
+              {destination.img_url && destination.img_url.length > 0 ? (
+                <img src={destination.img_url[0]} alt={destination.name} />
+              ) : (
+                <p>Ảnh không khả dụng</p>
+              )}
             </div>
             <div className="card_content">
               <h3>{destination.name}</h3>
@@ -60,7 +54,9 @@ const DestinationCard = ({ destinations, wishlist, toggleWishlist }) => {
               <div className="card_info">
                 <li>{destination.distance}</li>
                 <li>{destination.service}</li>
-                <li>{destination.open_hours} - {destination.close_hours} </li>
+                <li>
+                  {destination.open_hours} - {destination.close_hours}{" "}
+                </li>
               </div>
               <div className="price">
                 <p>{`VND ${destination.price.toLocaleString()}`}</p>
@@ -81,25 +77,6 @@ const DestinationCard = ({ destinations, wishlist, toggleWishlist }) => {
                   <span>{destination.rating}</span>
                 </div>
               </div>
-
-              <div className="wishlist">
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 24 24"
-    fill={wishlist[`${destination.type}-${destination._id}`] ? "red" : "none"}
-    stroke="currentColor"
-    strokeWidth="2"
-    className="heart-icon"
-    onClick={(e) => {
-      e.stopPropagation(); // Ngăn click ảnh hưởng đến card
-      toggleWishlist(destination._id, destination.type);
-    }}
-  >
-    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
-  </svg>
-</div>
-
-
             </div>
           </a>
         </div>

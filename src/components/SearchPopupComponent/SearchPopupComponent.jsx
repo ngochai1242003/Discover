@@ -463,7 +463,7 @@ const SearchPopupComponent = () => {
           </div>
 
           {isPopupActive && (
-            <div className="overlay" onClick={closePopup}></div>
+            <div className="overlay1" onClick={closePopup}></div>
           )}
         </>
       )}
