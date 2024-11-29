@@ -1,9 +1,10 @@
-import { Fragment, useState } from "react";
+import React from "react";
 import { Route, Routes } from "react-router-dom";
-// import DestinationList from "./components/destinationList/destinationList";
 import { routes } from "./routes";
 import DefaultComponent from "./components/DefaultComponent/DefaultComponent";
-import './app.css'
+import Dashboard from "./pages/Dashboard/Dashboard"; // Import Dashboard
+import './app.css';
+import 'boxicons/css/boxicons.min.css';
 
 const App = () => {
   return (
@@ -11,18 +12,43 @@ const App = () => {
       <Routes>
         {routes.map((route) => {
           const Page = route.page;
-          const Layout = route.isShowHeader ? DefaultComponent : Fragment;
+          const Layout = route.isShowHeader ? DefaultComponent : React.Fragment;
+
+          // Nếu là Dashboard, render các route con
+          if (route.path === "/dashboard") {
+            return (
+              <Route
+                key={route.path}
+                path={route.path}
+                element={<Dashboard />}
+              >
+                {route.children?.map((childRoute) => {
+                  const ChildPage = childRoute.page;
+                  return (
+                    <Route
+                      key={childRoute.path}
+                      path={childRoute.path}
+                      element={<ChildPage />}
+                    />
+                  );
+                })}
+              </Route>
+            );
+          }
+
+          // Route khác
           return (
-            <Route key={route.path}
+            <Route
+              key={route.path}
               path={route.path}
               element={
                 <Layout>
                   <Page />
                 </Layout>
-              } />
+              }
+            />
           );
         })}
-        {/* <Route path="/list" element={<DestinationList />} /> */}
       </Routes>
     </div>
   );

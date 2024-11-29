@@ -10,7 +10,6 @@ import VerifyOtp from "../components/Auth/VerifyOtp";
 import Dashboard from "../pages/Dashboard/Dashboard";
 import DashboardUser from "../components/DashboardUser/DashboardUser";
 import DashboardDestination from "../components/DashboardDestination/DashboardDestination";
-import MainContent from "../components/MainContent/MainContent";
 
 export const routes = [
     {
@@ -55,22 +54,18 @@ export const routes = [
     },
     {
         path: "/dashboard",
-        page: Dashboard, // Dashboard làm layout chung
-        isShowHeader: false,
-        children: [
-          {
-            path: "", // Route mặc định khi truy cập /dashboard
-            page: MainContent,
-          },
-          {
-            path: "/dashboard/dashboard-user", // Route con của /dashboard
-            page: DashboardUser,
-          },
-          {
-            path: "/dashboard/dashboard-destination", // Route con của /dashboard
-            page: DashboardDestination,
-          },
-        ],
-      },
+        page: Dashboard,
+        isShowHeader: false  
+    },
+    {
+        path: "/dashboard-user",
+        page: DashboardUser,
+        isShowHeader: false  
+    },
+    {
+        path: "/dashboard-destination",
+        page: DashboardDestination,
+        isShowHeader: false  
+    }
 
 ]
