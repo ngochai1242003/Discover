@@ -18,7 +18,8 @@ const HeaderComponent = () => {
   };
 
   const handleLogout = () => {
-    setUser(null); // Xóa trạng thái user
+    localStorage.clear();
+    setUser(null);
     navigate("/login"); // Chuyển hướng đến trang đăng nhập
   };
 

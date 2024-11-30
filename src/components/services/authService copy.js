@@ -1,30 +1,21 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:4000/api/v1/auth';
+const API_BASE_URL = 'http://localhost:4000/api/v1';
 
-export const register = async (userData) => {
-  try {
-    const response = await axios.post(`${API_URL}/register`, userData);
-    return response.data;
-  } catch (error) {
-    throw error.response.data;
-  }
+export const registerUser = async (userData) => {
+  return await axios.post(`${API_BASE_URL}/auth/signup`, userData);
 };
 
-export const login = async (username, password) => {
-  try {
-    const response = await axios.post(`${API_URL}/login`, { username, password });
-    return response.data;
-  } catch (error) {
-    throw error.response.data;
-  }
+export const loginUser = async (credentials) => {
+  return await axios.post(`${API_BASE_URL}/auth/login`, credentials);
 };
 
-export const verifyUser = async (token) => {
+export const sendOtp = async (email) => {
   try {
-    const response = await axios.get(`${API_URL}/verify?token=${token}`);
-    return response.data;
+    const response = await axios.post(`${API_BASE_URL}/sendOtp/send-otp`, { email });
+    console.log(response.data); // Dùng cho development
+    return response.data.message; // Trả về message thay vì OTP
   } catch (error) {
-    throw error.response.data;
+    throw error.response?.data || { message: 'Failed to send OTP' };
   }
 };

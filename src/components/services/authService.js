@@ -6,9 +6,13 @@ export const registerUser = async (userData) => {
   return await axios.post(`${API_BASE_URL}/auth/signup`, userData);
 };
 
-export const loginUser = async (credentials) => {
-  return await axios.post(`${API_BASE_URL}/auth/login`, credentials);
-};
+// export const loginUser = async (credentials) => {
+//     const response = await axios.post(`${API_BASE_URL}/auth/login`, credentials);
+//     const token = response.data.token;
+//     localStorage.setItem('authToken', token); 
+//     return response;
+// };
+
 
 export const sendOtp = async (email) => {
   try {

@@ -16,9 +16,22 @@ const Login = () => {
         "http://localhost:4000/api/v1/auth/login",
         formData
       );
-      alert("Đăng nhập thành công!");
-      setUser(response.data);
-      navigate("/");
+      
+      localStorage.setItem("accessToken", response.data.accessToken);
+      if(response.data.user_type === 'admin'){
+        navigate("/dashboard")
+      } else{
+        navigate("/");
+      }
+      
+      const user = {
+        id: response.data._id,
+        username: response.data.username,
+        avatar: response.data.avatar || null,
+        role: response.data.user_type
+      };
+      localStorage.setItem("user", JSON.stringify(user));
+      setUser(user);
     } catch (error) {
       alert(error.response?.data?.message || "Đăng nhập thất bại");
     }
