@@ -1,38 +1,65 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
+import { AuthContext } from "../../contexts/AuthContext";
 import DestinationCard from "../DestinationCard/destinationCard";
+import "./WishlistComponent.css";
 
-const WishlistComponent = ({ userId }) => {
-  const [wishlist, setWishlist] = useState([]);
+const WishlistComponent = () => {
+    const { user } = useContext(AuthContext); 
+    const [wishlist, setWishlist] = useState([]); 
+    const [loading, setLoading] = useState(true);
+    const [expanded, setExpanded] = useState(false); // Trạng thái "mở rộng"
 
-  useEffect(() => {
-    axios
-      .get(`/api/v1/wishlist/${userId}`)
-      .then((response) => {
-        setWishlist(response.data.wishlist || []);
-      })
-      .catch((error) => {
-        console.error("Error fetching wishlist:", error);
-      });
-  }, [userId]);
+    useEffect(() => {
+        if (!user) return; 
 
-  return (
-    <div className="wishlist-page">
-      <h1>Danh sách ưu thích</h1>
-      {wishlist.length > 0 ? (
-        wishlist.map((destination) => (
-          <DestinationCard
-            key={destination._id}
-            destination={destination}
-            isWishlisted={true}
-            onToggleWishlist={() => {}}
-          />
-        ))
-      ) : (
-        <p>Bạn chưa thêm địa điểm nào vào danh sách ưu thích.</p>
-      )}
-    </div>
-  );
+        const fetchWishlist = async () => {
+            try {
+                setLoading(true); 
+                const response = await axios.get(
+                    `http://localhost:4000/api/v1/wishlist/${user.id}`
+                );
+                setWishlist(response.data.wishlist || []); 
+            } catch (error) {
+                console.error("Lỗi khi lấy danh sách wishlist:", error);
+            } finally {
+                setLoading(false); 
+            }
+        };
+
+        fetchWishlist();
+    }, [user]); 
+
+    if (loading) {
+        return <p>Đang tải danh sách yêu thích...</p>;
+    }
+
+    if (wishlist.length === 0) {
+        return <p>Bạn chưa thêm địa điểm nào vào danh sách yêu thích.</p>;
+    }
+
+    const toggleExpanded = () => {
+        setExpanded(!expanded); // Thay đổi trạng thái mở rộng
+    };
+
+    return (
+        <div className="container line">
+            <h1 className="mgt">Danh sách đã lưu </h1>
+            <div className={`card_list1 ${expanded ? "expanded" : "collapsed"}`}>
+                {wishlist.map((item) => (
+                    <DestinationCard
+                        key={item._id}
+                        destinations={[item.destination_id]} 
+                    />
+                ))}
+            </div>
+            {wishlist.length > 4 && (
+                <button className="toggle-button" onClick={toggleExpanded}>
+                    {expanded ? "Thu gọn" : "Xem thêm"}
+                </button>
+            )}
+        </div>
+    );
 };
 
 export default WishlistComponent;

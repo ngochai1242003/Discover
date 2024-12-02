@@ -65,9 +65,7 @@ const Home = () => {
       if (cardElement && destinations.length > 0) {
         const containerWidth = listRef.current.offsetWidth;
         const cardWidth = cardElement.offsetWidth;
-        const itemsVisible = Math.floor(containerWidth / cardWidth);
-
-       setVisibleItems(itemsVisible > 0 ? itemsVisible : destinations.length);
+        setVisibleItems(Math.floor(containerWidth / cardWidth));
       }
     }
   };
@@ -76,30 +74,14 @@ const Home = () => {
   useEffect(() => {
     updateVisibleItems(hotelListRef, setHotelVisibleItems, hotelDestinations);
     updateVisibleItems(foodListRef, setFoodVisibleItems, foodDestinations);
-    updateVisibleItems(
-      activityListRef,
-      setActivityVisibleItems,
-      activityDestinations
-    );
-    updateVisibleItems(
-      sightseeingListRef,
-      setSightseeingVisibleItems,
-      sightseeingDestinations
-    );
+    updateVisibleItems(activityListRef, setActivityVisibleItems, activityDestinations);
+    updateVisibleItems(sightseeingListRef, setSightseeingVisibleItems, sightseeingDestinations);
 
     window.addEventListener("resize", () => {
       updateVisibleItems(hotelListRef, setHotelVisibleItems, hotelDestinations);
       updateVisibleItems(foodListRef, setFoodVisibleItems, foodDestinations);
-      updateVisibleItems(
-        activityListRef,
-        setActivityVisibleItems,
-        activityDestinations
-      );
-      updateVisibleItems(
-        sightseeingListRef,
-        setSightseeingVisibleItems,
-        sightseeingDestinations
-      );
+      updateVisibleItems(activityListRef, setActivityVisibleItems, activityDestinations);
+      updateVisibleItems(sightseeingListRef, setSightseeingVisibleItems, sightseeingDestinations);
     });
 
     return () => window.removeEventListener("resize", updateVisibleItems);
@@ -151,7 +133,7 @@ const Home = () => {
       setActivityCurrentIndex(activityCurrentIndex - 1);
     }
   };
-
+  
   //handleSightseeingNext
   const handleSightseeingNext = () => {
     if (
@@ -175,7 +157,6 @@ const Home = () => {
       if (cardElement) {
         const offset = hotelCurrentIndex * (cardElement.offsetWidth + 25);
         hotelListRef.current.style.transform = `translateX(-${offset}px)`;
-        hotelListRef.current.style.overflow = "visible";  
       }
     }
   }, [hotelCurrentIndex, hotelDestinations]);
@@ -214,17 +195,6 @@ const Home = () => {
     }
   }, [sightseeingCurrentIndex, sightseeingDestinations]);
 
-  const [wishlist, setWishlist] = useState({});
-
-  const toggleWishlist = (id, type) => {
-    const uniqueKey = `${type}-${id}`;
-    setWishlist((prev) => ({
-      ...prev,
-      [uniqueKey]: !prev[uniqueKey], // Toggle trạng thái
-    }));
-  };
-  
-
   return (
     <div>
       <main>
@@ -244,11 +214,7 @@ const Home = () => {
         {/* Khach san */}
         <div className="main_card">
           <div className="card_list" ref={hotelListRef}>
-            <DestinationCard
-              destinations={hotelDestinations}
-              wishlist={wishlist}
-              toggleWishlist={(id) => toggleWishlist(id, "Hotel")}
-            />
+            <DestinationCard destinations={hotelDestinations} />
           </div>
           <div className="buttons1">
             <button
@@ -278,11 +244,7 @@ const Home = () => {
         {/* an uong */}
         <div className="main_card">
           <div className="card_list" ref={foodListRef}>
-            <DestinationCard
-              destinations={foodDestinations}
-              wishlist={wishlist}
-              toggleWishlist={(id) => toggleWishlist(id, "Food")}
-            />
+            <DestinationCard destinations={foodDestinations} />
           </div>
           <div className="buttons1">
             <button
@@ -311,11 +273,7 @@ const Home = () => {
         {/* hoạt động */}
         <div className="main_card">
           <div className="card_list" ref={activityListRef}>
-            <DestinationCard
-              destinations={activityDestinations}
-              wishlist={wishlist}
-              toggleWishlist={(id) => toggleWishlist(id, "Activity")}
-            />
+            <DestinationCard destinations={activityDestinations} />
           </div>
           <div className="buttons1">
             <button
@@ -345,11 +303,7 @@ const Home = () => {
         {/* Tham quan */}
         <div className="main_card">
           <div className="card_list" ref={sightseeingListRef}>
-            <DestinationCard
-              destinations={sightseeingDestinations}
-              wishlist={wishlist}
-              toggleWishlist={(id) => toggleWishlist(id, "Sightseeing")}
-            />
+            <DestinationCard destinations={sightseeingDestinations} />
           </div>
           <div className="buttons1">
             <button

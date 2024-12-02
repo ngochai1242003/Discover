@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import logo from "../../assets/img/logo.png";
 import { useAuth } from "../../contexts/AuthContext";
 import { Avatar, Menu, MenuItem } from "@mui/material";
+import { Link } from 'react-router-dom';
 const HeaderComponent = () => {
   const navigate = useNavigate();
   const { user, setUser } = useAuth(); // Lấy thông tin user và hàm cập nhật
@@ -46,9 +47,9 @@ const HeaderComponent = () => {
                     fill="#0194F3"
                   />
                 </svg>
-                <a className="list_content" href="#">
+                <Link to="/wishlist" className="list_content" >
                   Danh sách ưu thích
-                </a>
+                </Link>
               </li>
 
               <li className="menu_list">

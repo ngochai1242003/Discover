@@ -11,6 +11,7 @@ import Dashboard from "../pages/Dashboard/Dashboard";
 import DashboardUser from "../components/DashboardUser/DashboardUser";
 import DashboardDestination from "../components/DashboardDestination/DashboardDestination";
 import MainContent from "../components/MainContent/MainContent";
+import WishlistComponent from "../components/WishlistComponent/WishlistComponent";
 
 export const routes = [
     {
@@ -53,6 +54,11 @@ export const routes = [
         page: DestinationDetail,
         isShowHeader: true  
     },
+    {
+      path: "/wishlist",
+      page: WishlistComponent,
+      isShowHeader: true  
+  },
     {
         path: "/dashboard",
         page: Dashboard, // Dashboard làm layout chung

@@ -57,23 +57,18 @@
   gap: 26px;
 }
 
-.card_list1{
-  flex-wrap: wrap;
-  gap: 24px 26px;
-}
-
  .list_card {
   position: relative;
   width: 280px;
   height: 450px;
   border: solid 1px #dedfe3;
-  box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.1);
+  /* box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.1); */
   border-radius: 4px;
 }
 
 
 .card_img {
-  width: 280px;
+  width: 279px;
   height: 260px;
   overflow: hidden;
   border-radius: 4px 4px 0 0;
@@ -185,8 +180,8 @@
   right: 10px;
   background-color: white;
   border-radius: 50%;
-  width: 36px;
-  height: 36px;
+  width: 32px;
+  height: 32px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -197,13 +192,19 @@
 }
 
 .wishlist:hover {
-  transform: scale(1.1);
+  /* transform: scale(1.1); */
 }
 
 .heart-icon {
-  width: 20px;
-  height: 20px;
-  transition: fill 0.3s ease;
+  width: 22px; 
+  height: 22px;
+  stroke: black;
+  cursor: pointer;
+}
+
+.heart-icon[fill="red"] {
+  fill: red;
+  stroke: none;
 }
 
 .heart-icon:hover {

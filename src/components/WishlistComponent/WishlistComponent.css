@@ -1,0 +1,59 @@
+.mgt{
+    margin-top: 200px;
+    /* font-size: 24px; */
+    font-weight: bold;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #ccc;
+}
+
+.line{
+    border-top: 2px solid #ccc;
+    border-bottom: 2px solid #ccc;
+}
+
+.card_list1 {
+    display: flex;
+    flex-wrap: wrap;
+    transition: max-height 0.5s ease, opacity 0.5s ease;
+    gap: 26px;
+    overflow: hidden;
+}
+
+.card_list1.collapsed {
+    max-height: 460px; /* Giới hạn chiều cao ban đầu */
+    opacity: 1;
+}
+
+.card_list1.expanded {
+    max-height: 2000px; /* Tăng chiều cao khi mở rộng */
+    opacity: 1;
+}
+
+.list_card1 {
+    flex: 0 1 calc(25% - 20px); /* Mỗi card chiếm 1/4 hàng */
+    max-width: calc(25% - 20px);
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+    background: white;
+}
+
+
+.toggle-button {
+    margin: 20px auto;
+    display: block;
+    background-color: #2067DA;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    
+}
+
+.toggle-button:hover {
+    background-color: #184a8c;
+}
