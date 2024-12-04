@@ -9,7 +9,7 @@ const DashboardUser = () => {
 
   const toggleNewUserModal = () => {
     setShowNewUserModal(!showNewUserModal);
-    setShowOverlay(!showOverlay); // Hiển thị hoặc ẩn overlay
+    setShowOverlay(!showOverlay); 
   };
 
 
