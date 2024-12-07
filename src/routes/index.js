@@ -12,6 +12,7 @@ import DashboardUser from "../components/DashboardUser/DashboardUser";
 import DashboardDestination from "../components/DashboardDestination/DashboardDestination";
 import MainContent from "../components/MainContent/MainContent";
 import WishlistComponent from "../components/WishlistComponent/WishlistComponent";
+import ForgotPassword from "../components/Auth/Forgotpassword";
 
 export const routes = [
     {
@@ -38,11 +39,18 @@ export const routes = [
         page: Login,
         isShowHeader: false  
     },
+
     {
         path: "/register",
         page: Register,
         isShowHeader: false  
     },
+
+    {
+      path: "/forgotpassword",
+      page: ForgotPassword,
+      isShowHeader: false  
+  },
 
     {
         path: "/verify",

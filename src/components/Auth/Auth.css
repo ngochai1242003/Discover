@@ -1,172 +1,297 @@
-.wrapper_auth {
+/* General Body Styling */
+body {
     font-family: Arial, sans-serif;
-    background: #f0f2f5;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f2f5;
+    box-sizing: border-box;
+}
+
+/* Wrapper to center the form */
+.wrapper_auth {
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
     background: url('../../assets/img/danang.jpg') no-repeat center center fixed;
+    background-size: cover;
+    padding: 0 15px;
+    /* Ensure some space on smaller screens */
 }
 
+.go-back-btn {
+    width: 30px;
+    /* Đặt chiều rộng của nút */
+    height: 30px;
+    /* Đặt chiều cao của nút */
+    background-color: #007bff;
+    /* Màu nền của nút */
+    border: none;
+    /* Không có viền */
+    border-radius: 50%;
+    /* Đặt border-radius để tạo hình tròn */
+    color: white;
+    /* Màu chữ */
+    display: flex;
+    /* Sử dụng flexbox để căn chỉnh chữ */
+    justify-content: center;
+    /* Căn giữa theo chiều ngang */
+    align-items: center;
+    /* Căn giữa theo chiều dọc */
+    font-size: 15px;
+    /* Kích thước chữ */
+    cursor: pointer;
+    /* Thay đổi con trỏ khi hover */
+    transition: background-color 0.3s ease;
+    /* Hiệu ứng chuyển màu */
+}
+
+.go-back-btn:hover {
+    background-color: #0056b3;
+    /* Màu khi hover */
+}
+
+
+/* Main form container */
 .container1 {
-    background: white;
-    padding: 20px;
+    background:linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%);
+    padding: 40px 30px;
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    /* width: 100%; */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     max-width: 400px;
-    
-    
+    width: 100%;
+    box-sizing: border-box;
 }
 
-
+/* Header for form */
 .h2_login {
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
     color: #1a73e8;
-    font-size: 25px;
+    font-size: 28px;
+    font-weight: 600;
 }
 
+/* Form group style */
 .form-group {
+    margin-bottom: 20px;
+}
+
+/* Label for input fields */
+label {
+    display: block;
+    margin-bottom: 8px;
+    color: #333;
+    font-weight: 500;
+}
+
+/* Styling input fields */
+input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+    /* margin-bottom: 12px; */
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+}
+
+input:focus {
+    border-color: #1a73e8;
+    outline: none;
+}
+
+/* Password conditions section */
+.password-conditions {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.password-column {
+    width: 48%;
+}
+
+.password-conditions p {
+    margin: 5px 0;
+    font-size: 14px;
+}
+
+.password-conditions p span {
+    margin-left: 8px;
+    color: green;
+}
+
+/* Button Styles */
+.btn_login,
+.form-group1_button {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+    /* Gradient màu tím - xanh */
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.btn_login:hover, .form-group1_button:hover {
+    background: linear-gradient(135deg, #2575fc 0%, #6a11cb 100%);
+    /* Đảo ngược gradient khi hover */
+    transform: translateY(-2px);
+    /* Hiệu ứng nâng khi hover */
+}
+
+.btn_login:active,
+.form-group1_button:active {
+    transform: translateY(2px);
+    /* Hiệu ứng khi nhấn */
+}
+
+.btn_login:focus,
+.form-group1_button:focus {
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(38, 142, 255, 0.5);
+    /* Hiệu ứng focus với viền xanh */
+}
+
+/* Đổi màu gradient cho nút gửi OTP */
+.form-group1_button {
+    background: linear-gradient(135deg, #ff7e5f 0%, #feb47b 100%);
+    /* Gradient màu cam */
+}
+
+.form-group1_button:hover {
+    background: linear-gradient(135deg, #feb47b 0%, #ff7e5f 100%);
+    /* Đảo ngược gradient khi hover */
+}
+
+/* OTP input and button styling (Horizontal Layout) */
+.form-group1 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
     margin-bottom: 15px;
 }
 
-.form-group1{
-    display: flex;
-    justify-content: space-between; /* Tạo khoảng cách giữa nút và input */
-    align-items: center; /* Căn giữa theo chiều dọc */
-    gap: 10px;
-    margin-bottom: 10px;
+/* Phần container chứa mật khẩu và icon */
+.password-container {
+    position: relative;
+    width: 100%;
 }
 
-.form-group1_button{
-    padding: 10px 15px;
-    background-color: #1a73e8;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s ease;
-}
-
-.form-group1_input{
-    flex: 1; /* Để input chiếm toàn bộ không gian còn lại */
-    padding: 10px;
+.password-container input {
+    width: 100%;
+    padding: 12px;
     border: 1px solid #ddd;
-    border-radius: 4px;
+    border-radius: 6px;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+.password-toggle-icon {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 20px;
+    color: #888;
+    transition: color 0.3s ease;
+}
+
+.password-toggle-icon:hover {
+    color: #1a73e8;
+}
+
+/* Thêm hiệu ứng khi focus vào trường mật khẩu */
+.password-container input:focus {
+    border-color: #1a73e8;
+    outline: none;
+}
+
+.form-group1_input {
+    width: calc(100% - 120px);
+    /* Adjust width to make room for the button */
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
     font-size: 14px;
 }
 
-label {
-    display: block;
-    margin-bottom: 5px;
-    color: #333;
-}
-
-input {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 14px;
-}
-
-.btn_login {
-    width: 100%;
-    padding: 10px;
-    background: #1a73e8;
+.form-group1_button {
+    width: 100px;
+    /* Fixed width for OTP send button */
+    padding: 12px 15px;
+    background-color: #ff7e5f;
     color: white;
     border: none;
-    border-radius: 4px;
+    border-radius: 6px;
     cursor: pointer;
     font-size: 16px;
 }
 
-.btn_login:hover {
-    background: #1557b0;
+.form-group1_button:hover {
+    background-color: #feb47b;
 }
 
+/* Switch form link style */
 .switch-form {
     text-align: center;
-    margin-top: 15px;
+    margin-top: 20px;
 }
 
 .switch-form a {
     color: #1a73e8;
+    font-weight: 500;
     text-decoration: none;
 }
 
-/* Style cho notification */
-/* Sửa lại style cho notification */
-.notification {
-    position: fixed;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    padding: 20px 40px;
-    border-radius: 8px;
-    color: white;
-    font-weight: bold;
-    display: none;
-    z-index: 1000;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-    text-align: center;
-    animation: fadeIn 0.3s ease-in-out;
+.switch-form a:hover {
+    text-decoration: underline;
 }
 
-/* Thêm overlay nền tối */
-.overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    display: none;
-    z-index: 999;
-    animation: fadeIn 0.3s ease-in-out;
-}
+/* Mobile responsiveness */
+@media (max-width: 600px) {
+    .container1 {
+        padding: 25px 15px;
+        max-width: 100%;
+    }
 
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
+    .h2_login {
+        font-size: 22px;
+    }
 
-.success { 
-    background-color: #4CAF50; 
-    font-size: 18px;
-    min-width: 300px;
-}
+    .btn_login {
+        padding: 12px;
+        font-size: 14px;
+    }
 
-.error { 
-    background-color: #f44336;
-    font-size: 16px;
-    min-width: 300px;
-}
+    /* Đổi dạng hiển thị cột cho password conditions trên màn hình nhỏ */
+    .password-conditions {
+        flex-direction: column;
+    }
 
-/* Icon styles */
-.notification-icon {
-    font-size: 48px;
-    margin-bottom: 10px;
-    display: block;
-}
+    .password-column {
+        width: 100%;
+    }
 
-.notification-message {
-    margin-bottom: 15px;
-}
 
-.notification-button {
-    background: white;
-    color: #333;
-    padding: 8px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    margin-top: 10px;
-    font-weight: bold;
-}
+    /* Adjust OTP input and button for small screens */
+    .form-group1 {
+        flex-direction: column;
+        gap: 15px;
+    }
 
-.notification-button:hover {
-    background: #f0f0f0;
+    .form-group1_input,
+    .form-group1_button {
+        width: 100%;
+        /* Make them full width on small screens */
+    }
+
 }

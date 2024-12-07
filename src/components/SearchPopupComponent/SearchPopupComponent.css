@@ -11,6 +11,7 @@
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   max-height: 80vh; /* Đặt chiều cao tối đa để popup không vượt quá chiều cao màn hình */
+  
 }
 
 .popup.active {
