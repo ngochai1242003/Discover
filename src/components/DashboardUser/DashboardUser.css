@@ -73,7 +73,14 @@ body.no-scroll {
 
 /* Thu nhỏ cột Name */
 .table td:nth-child(3), .table th:nth-child(3) {
-    max-width: 500px; 
+    max-width: 400px; 
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+}
+
+.table td:nth-child(5), .table th:nth-child(5) {
+    max-width: 200px; 
     white-space: nowrap; 
     overflow: hidden; 
     text-overflow: ellipsis; 

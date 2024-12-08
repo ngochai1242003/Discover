@@ -1,11 +1,19 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useAuth } from "../../contexts/AuthContext";
 
 const Sidebar = ({toggle}) => {
   const [active, setActive] = useState("overview");
+  const { user, setUser } = useAuth();
 
   const handleMenuClick = (menu) => {
     setActive(menu);
+  };
+
+  const handleLogout = () => {
+    localStorage.clear();
+    setUser(null);
+    navigate("/login"); // Chuyển hướng đến trang đăng nhập
   };
 
   return (
@@ -58,7 +66,7 @@ const Sidebar = ({toggle}) => {
         <li>
           <a href="#" className="logout">
             <i className="bx bxs-log-out-circle"></i>
-            <span className="text">Logout</span>
+            <span className="text" onClick={handleLogout}>Logout</span>
           </a>
         </li>
       </ul>

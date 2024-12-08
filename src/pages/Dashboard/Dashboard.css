@@ -15,7 +15,6 @@ li {
 :root {
     --poppins : 'Poppins', sans-serif;
     --lato : 'Lato', sans-serif;
-
     --light : #f9f9f9;
     --blue : #6104F7;
     --light-blue : #CFE8FF;
@@ -183,7 +182,7 @@ body {
 
  /* Navbar */
   #content nav {
-    height: 56px;
+    height: 70px;
     background: var(--light);
     padding: 0 24px;
     display: flex;
@@ -265,6 +264,7 @@ body {
   }
 
   #content nav .notification {
+    margin-top: 6px;
     font-size: 20px;
     position: relative;
   }
