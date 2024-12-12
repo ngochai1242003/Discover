@@ -13,78 +13,85 @@ import DashboardDestination from "../components/DashboardDestination/DashboardDe
 import MainContent from "../components/MainContent/MainContent";
 import WishlistComponent from "../components/WishlistComponent/WishlistComponent";
 import ForgotPassword from "../components/Auth/Forgotpassword";
+import ModifyProfile from "../pages/ModifyProfile/ModifyProfile";
 
 export const routes = [
-    {
-        path: '/',
-        page: Home,
-        isShowHeader: true
-    },
-    {
-        path: "*",
-        page: NotFundPage
-    },
-    {
-        path: '/search-results',
-        page: SearchResultsPage,
-        isShowHeader: true
-    },
-    {
-        path: '/filter-results',
-        page: FilterResultsPage,
-        isShowHeader: true
-    },
-    {
-        path: "/login",
-        page: Login,
-        isShowHeader: false  
-    },
-
-    {
-        path: "/register",
-        page: Register,
-        isShowHeader: false  
-    },
-
-    {
-      path: "/forgotpassword",
-      page: ForgotPassword,
-      isShowHeader: false  
+  {
+    path: "/",
+    page: Home,
+    isShowHeader: true,
+  },
+  {
+    path: "*",
+    page: NotFundPage,
+  },
+  {
+    path: "/search-results",
+    page: SearchResultsPage,
+    isShowHeader: true,
+  },
+  {
+    path: "/filter-results",
+    page: FilterResultsPage,
+    isShowHeader: true,
+  },
+  {
+    path: "/login",
+    page: Login,
+    isShowHeader: false,
   },
 
-    {
-        path: "/verify",
-        page: VerifyOtp,
-        isShowHeader: false  
-    },
-    {
-        path: "/destination-detail/:id",
-        page: DestinationDetail,
-        isShowHeader: true  
-    },
-    {
-      path: "/wishlist",
-      page: WishlistComponent,
-      isShowHeader: true  
+  {
+    path: "/register",
+    page: Register,
+    isShowHeader: false,
   },
-    {
-        path: "/dashboard",
-        page: Dashboard, // Dashboard làm layout chung
-        isShowHeader: false,
-        children: [
-          {
-            path: "", // Route mặc định khi truy cập /dashboard
-            page: MainContent,
-          },
-          {
-            path: "/dashboard/dashboard-user", // Route con của /dashboard
-            page: DashboardUser,
-          },
-          {
-            path: "/dashboard/dashboard-destination", // Route con của /dashboard
-            page: DashboardDestination,
-          },
-        ],
+
+  {
+    path: "/forgotpassword",
+    page: ForgotPassword,
+    isShowHeader: false,
+  },
+
+  {
+    path: "/verify",
+    page: VerifyOtp,
+    isShowHeader: false,
+  },
+
+  {
+    path: "/destination-detail/:id",
+    page: DestinationDetail,
+    isShowHeader: true,
+  },
+
+  {
+    path: "/wishlist",
+    page: WishlistComponent,
+    isShowHeader: true,
+  },
+
+  {
+    path: "/dashboard",
+    page: Dashboard, // Dashboard làm layout chung
+    isShowHeader: false,
+    children: [
+      {
+        path: "", // Route mặc định khi truy cập /dashboard
+        page: MainContent,
       },
-
-]
+      {
+        path: "/dashboard/dashboard-user", // Route con của /dashboard
+        page: DashboardUser,
+      },
+      {
+        path: "/dashboard/dashboard-destination", // Route con của /dashboard
+        page: DashboardDestination,
+      },
+    ],
+  },
+  {
+    path:"/edit-profile",
+    page: ModifyProfile,
+},
+];

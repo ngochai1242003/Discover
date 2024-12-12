@@ -1,6 +1,5 @@
 import React, { createContext, useState, useContext } from "react";
 
-// const AuthContext = createContext();
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
@@ -9,8 +8,11 @@ export const AuthProvider = ({ children }) => {
     return user ? JSON.parse(user) : null;
   }); // null nếu chưa đăng nhập
 
+  const hasRole = (role) => user?.role === role;
+  // console.log('««««« role »»»»»', role);
+
   return (
-    <AuthContext.Provider value={{ user, setUser }}>
+    <AuthContext.Provider value={{ user, setUser, hasRole  }}>
       {children}
     </AuthContext.Provider>
   );

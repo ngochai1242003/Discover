@@ -65,6 +65,7 @@ const DashboardDestination = () => {
         description: destination.description || "",
         open_hours: destination.open_hours || "",
         close_hours: destination.close_hours || "",
+        place: destination.place || "",
         image_url: destination.image_url || "",
       });
     }
@@ -81,6 +82,7 @@ const DashboardDestination = () => {
       description: "",
       open_hours: "",
       close_hours: "",
+      place: "",
       image_url: "",
     });
     document.body.classList.remove("no-scroll");
@@ -440,6 +442,15 @@ const DashboardDestination = () => {
                       type="text"
                       name="close_hours"
                       value={formData.close_hours}
+                      onChange={handleChange}
+                    />
+                  </label>
+                  <label>
+                    Place:{" "}
+                    <input
+                      type="text"
+                      name="place"
+                      value={formData.place}
                       onChange={handleChange}
                     />
                   </label>

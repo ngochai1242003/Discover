@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./DashboardUser.css";
+import { Avatar, Menu, MenuItem } from "@mui/material";
 
 const DashboardUser = () => {
   const [users, setUsers] = useState([]);
@@ -99,7 +100,9 @@ const DashboardUser = () => {
             <tr key={user._id}>
               <td>{index + 1}</td>
               <td>
-                <img src={user.avatar || "https://via.placeholder.com/40"} alt="User" />
+                <Avatar alt={user.username}
+                    src={user.avatar || "/default-avatar.jpg"} 
+                    className="avatar"/>
               </td>
               <td>{user.username}</td>
               <td>{user.email}</td>

@@ -86,6 +86,17 @@ body.no-scroll {
     text-overflow: ellipsis; 
 }
 
+.table td {
+    text-align: center;
+    vertical-align: middle; 
+  }
+  
+  .table td img,
+  .table td .avatar {
+    margin: 0 auto; 
+    background-color: #FFD1DC;
+  }
+
 /* Các nút hành động */
 .action-btn {
     display: inline-block;

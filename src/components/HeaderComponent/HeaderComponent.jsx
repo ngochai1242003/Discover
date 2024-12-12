@@ -111,6 +111,12 @@ const HeaderComponent = () => {
                     open={Boolean(anchorEl)}
                     onClose={handleClose}
                   >
+                    <MenuItem onClick={() => navigate("/edit-profile")}>
+                      Chỉnh sửa thông tin
+                    </MenuItem>
+                    <MenuItem onClick={() => navigate("/history")}>
+                      Lịch sử lịch trình
+                    </MenuItem>
                     <MenuItem onClick={handleLogout}>Đăng xuất</MenuItem>
                   </Menu>
                 </div>
