@@ -97,7 +97,7 @@ const DestinationDetail = () => {
           </div>
         </section>
 
-        <Lightbox images={destination.img_url} />
+        <Lightbox images={destination.image_url} />
 
         {/* Phần mô tả có nút mở rộng */}
         <section className="description_detail">
@@ -151,7 +151,7 @@ const DestinationDetail = () => {
               <div className="icon-container">📍</div>
               <div className="activity-content">
                 <h3>VỊ trí</h3>
-                <p>136-138-140, Phan Châu Trinh, P. Phước Ninh, Q. Hải Châu, Tp. Đà Nẵng</p>
+                <p>{destination.place}</p>
               </div>
             </li>
             <li>

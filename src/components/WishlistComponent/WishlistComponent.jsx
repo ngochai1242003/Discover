@@ -46,12 +46,13 @@ const WishlistComponent = () => {
     <div className="container line">
       <h1 className="mgt">Danh sách đã lưu </h1>
       <div className={`card_list1 ${expanded ? "expanded" : "collapsed"}`}>
-        {wishlist.map((item) => (
-          <DestinationCard
-            key={item._id}
-            destinations={[item.destination_id]}
-          />
-        ))}
+      {wishlist.map((item) => (
+    item.destination_id && item.destination_id.image_url ? (
+        <DestinationCard key={item._id} destinations={[item.destination_id]} />
+    ) : (
+        <p>Địa điểm không khả dụng</p>
+    )
+))}
       </div>
       {wishlist.length > 4 && (
         <button className="toggle-button" onClick={toggleExpanded}>

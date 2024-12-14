@@ -91,7 +91,6 @@ const DashboardUser = () => {
             <th>Email</th>
             <th>Phone</th>
             <th>Position</th>
-            <th>Start Date</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -108,7 +107,7 @@ const DashboardUser = () => {
               <td>{user.email}</td>
               <td>{user.phone}</td>
               <td>{user.user_type}</td>
-              <td>{new Date(user.startDate).toLocaleDateString()}</td>
+              
               <td>
                 <button
                   className="action-btn edit"

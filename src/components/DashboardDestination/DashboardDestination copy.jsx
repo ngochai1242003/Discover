@@ -206,17 +206,11 @@ const DashboardDestination = () => {
     try {
       const token = localStorage.getItem("accessToken");
       const formDataWithFiles = new FormData();
-  
+
       Object.keys(formData).forEach((key) => {
-        if (key === "image_url" && formData.image_url instanceof FileList) {
-          Array.from(formData.image_url).forEach((file) =>
-            formDataWithFiles.append("image_url", file)
-          );
-        } else {
-          formDataWithFiles.append(key, formData[key]);
-        }
+        formDataWithFiles.append(key, formData[key]);
       });
-  
+
       await axios.post(
         "http://localhost:4000/api/v1/admin/add-destination",
         formDataWithFiles,
@@ -227,17 +221,15 @@ const DashboardDestination = () => {
           },
         }
       );
-  
+
       showSuccessToast("Thêm địa điểm thành công!");
       fetchDestinations();
       closeModal();
     } catch (err) {
-      console.error("Error adding destination:", err.response?.data || err.message);
-      alert("Failed to add destination: " + (err.response?.data?.message || "Unknown error"));
+      console.error("Error adding destination:", err);
+      alert("Failed to add destination!");
     }
   };
-  
-  
 
   return (
     <div className="c11">
@@ -266,22 +258,20 @@ const DashboardDestination = () => {
                 <tr key={destination._id}>
                   <td>{(currentPage - 1) * itemsPerPage + index + 1}</td>
                   <td>
-                  <img
-  src={
-    Array.isArray(destination.image_url)
-      ? destination.image_url.length > 0
-        ? destination.image_url[0]
-        : "https://via.placeholder.com/40"
-      : destination.image_url || "https://via.placeholder.com/40"
-  }
-  alt="Destination"
-  style={{
-    width: "40px",
-    height: "40px",
-    objectFit: "cover",
-  }}
-/>
-
+                    <img
+                      src={
+                        Array.isArray(destination.img_url) &&
+                        destination.img_url.length > 0
+                          ? destination.img_url[0]
+                          : "https://via.placeholder.com/40"
+                      }
+                      alt="Destination"
+                      style={{
+                        width: "40px",
+                        height: "40px",
+                        objectFit: "cover",
+                      }}
+                    />
                   </td>
                   <td>{destination.name}</td>
                   <td>{destination.category}</td>
@@ -493,38 +483,36 @@ const DashboardDestination = () => {
                       />
                     </label>
                     <label>
-  Images:
-  <div
-    style={{
-      display: "flex",
-      flexWrap: "wrap",
-      gap: "10px",
-      marginTop: "10px",
-    }}
-  >
-    {selectedDestination.image_url &&
-    selectedDestination.image_url.length > 0 ? (
-      selectedDestination.image_url.map((img, index) => (
-        <img
-          key={index}
-          src={`http://localhost:4000${img}`} // Đảm bảo URL đầy đủ
-          alt={`Destination ${index + 1}`}
-          style={{
-            width: "100px",
-            height: "100px",
-            objectFit: "cover",
-            borderRadius: "5px",
-            border: "1px solid #ddd",
-          }}
-        />
-      ))
-    ) : (
-      <p>No images available</p>
-    )}
-  </div>
-</label>
-
-
+                      Images:
+                      <div
+                        style={{
+                          display: "flex",
+                          flexWrap: "wrap",
+                          gap: "10px",
+                          marginTop: "10px",
+                        }}
+                      >
+                        {selectedDestination.img_url &&
+                        selectedDestination.img_url.length > 0 ? (
+                          selectedDestination.img_url.map((url, index) => (
+                            <img
+                              key={index}
+                              src={url}
+                              alt={`Destination ${index + 1}`}
+                              style={{
+                                width: "100px",
+                                height: "100px",
+                                objectFit: "cover",
+                                borderRadius: "5px",
+                                border: "1px solid #ddd",
+                              }}
+                            />
+                          ))
+                        ) : (
+                          <p>No images available</p>
+                        )}
+                      </div>
+                    </label>
                   </form>
                 </div>
               ) : modalMode === "add" ? (

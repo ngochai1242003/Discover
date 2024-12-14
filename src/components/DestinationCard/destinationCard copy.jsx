@@ -53,13 +53,13 @@ const DestinationCard = ({ destinations }) => {
       {destinations.map((destination) => (
         <div className="list_card" key={destination._id}>
           <a className="card" onClick={() => handleCardClick(destination._id)}>
-          <div className="card_img">
-  {Array.isArray(destination.image_url) && destination.image_url.length > 0 ? (
-      <img src={destination.image_url[0]} alt={destination.name} />
-  ) : (
-      <p>Ảnh không khả dụng</p>
-  )}
-</div>
+            <div className="card_img">
+              {destination.image_url && destination.image_url.length > 0 ? (
+                <img src={destination.image_url[0]} alt={destination.name} />
+              ) : (
+                <p>Ảnh không khả dụng</p>
+              )}
+            </div>
             <div className="card_content">
               <h3>{destination.name}</h3>
               <div className="location">

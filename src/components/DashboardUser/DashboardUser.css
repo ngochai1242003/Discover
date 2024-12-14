@@ -51,6 +51,44 @@ body.no-scroll {
     text-align: center; /* Căn giữa ngang */
     vertical-align: middle; /* Căn giữa dọc */
     border: 1px solid #ddd;
+    width: auto;
+}
+
+.table th:nth-child(1),
+.table td:nth-child(1) {
+    width: 10px; /* Cố định chiều rộng cho cột S.No */
+}
+
+.table th:nth-child(2),
+.table td:nth-child(2) {
+    width: 10px; /* Cố định chiều rộng cho cột Picture */
+}
+
+.table th:nth-child(3),
+.table td:nth-child(3) {
+    width: 200px; /* Cố định chiều rộng cho cột Name */
+    max-width: 200px; 
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.table th:nth-child(4),
+.table td:nth-child(4) {
+    width: 150px; /* Cố định chiều rộng cho cột Category */
+}
+
+.table th:nth-child(5),
+.table td:nth-child(5) {
+    width: 200px;
+    max-width: 200px; /* Cố định chiều rộng cho cột Location */
+    text-overflow: ellipsis;
+}
+
+.table th:nth-child(6),
+.table td:nth-child(6) {
+    max-width: 150px;
+    width: 150px; /* Cố định chiều rộng cho cột Action */
 }
 
 .table th {
@@ -72,19 +110,19 @@ body.no-scroll {
 }
 
 /* Thu nhỏ cột Name */
-.table td:nth-child(3), .table th:nth-child(3) {
-    max-width: 400px; 
-    white-space: nowrap; 
-    overflow: hidden; 
-    text-overflow: ellipsis; 
-}
-
-.table td:nth-child(5), .table th:nth-child(5) {
+/* .table td:nth-child(3), .table th:nth-child(3) {
     max-width: 200px; 
     white-space: nowrap; 
     overflow: hidden; 
     text-overflow: ellipsis; 
-}
+} */
+
+/* .table td:nth-child(5), .table th:nth-child(5) {
+    max-width: 200px; 
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+} */
 
 .table td {
     text-align: center;
@@ -385,3 +423,63 @@ button.cancel-btn:hover {
     }
 }
 
+/* Vùng chứa bảng và phân trang */
+.table-container {
+    position: relative; 
+    margin-bottom: 60px; 
+}
+
+/* Bảng */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center; 
+}
+
+/* Thanh phân trang cố định */
+.pagination {
+    position: fixed; /* Giữ cố định ở dưới */
+    bottom: 60px;
+    left: 0;
+    width: 80%; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f4f4f9; /* Nền sáng */
+    padding: 10px 0;
+    /* border-top: 1px solid #ddd; */
+    z-index: 1000;
+    margin-left: 280px;
+}
+
+/* Nút trong thanh phân trang */
+.pagination button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    margin: 0 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.pagination button:hover {
+    background-color: #0056b3;
+}
+
+.pagination button.active {
+    background-color: #0056b3;
+    font-weight: bold;
+}
+
+.pagination button:disabled {
+    background-color: #cccccc;
+    color: #666666;
+    cursor: not-allowed;
+}
+
+  
