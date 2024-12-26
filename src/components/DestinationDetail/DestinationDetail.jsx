@@ -1,242 +1,270 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import axios from "axios";
-import "./destinationDetail.css";
-import SearchPopupComponent from "../SearchPopupComponent/SearchPopupComponent";
-import banner from "../../assets/img/banner2.jpg";
-import Lightbox from "../Lightbox/Lightbox";
-import "../Lightbox/Lightbox.css";
-import { Link } from "react-router-dom";
+import "./DestinationDetail.css";
+import beach from "../../assets/img/beach.jpg";
+import { useLocation } from "react-router-dom";
+import { useState, useMemo, useEffect } from "react";
 
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-
-import "leaflet/dist/leaflet.css";
-import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
-import "leaflet-defaulticon-compatibility";
-
-const DestinationDetail = () => {
-  const { id } = useParams(); // Lấy id từ URL
-  const [destination, setDestination] = useState(null);
-  const [isExpanded, setIsExpanded] = useState(false); // State để điều khiển mở rộng
+const DetailDestination = () => {
+  const location = useLocation();
+  const { currentDestination, allDestinations, selectedDay } =
+    location.state || {};
+  const totalDays = Math.ceil(allDestinations?.length / 3);
+  const [activeDay, setActiveDay] = useState(selectedDay || 1);
 
   useEffect(() => {
-    const fetchDestinationDetail = async () => {
-      try {
-        const response = await axios.get(
-          `http://localhost:4000/api/v1/destination/${id}`
-        );
-        setDestination(response.data);
-      } catch (error) {
-        console.error("Error fetching destination details:", error);
-      }
-    };
-    fetchDestinationDetail();
-  }, [id]);
+    if (selectedDay) {
+      setActiveDay(selectedDay);
+    }
+  }, [selectedDay]);
 
-  if (!destination) {
-    return <p>Loading...</p>;
-  }
+  const getDaySchedule = () => {
+    const schedule = [];
 
-  const { name, lat, lng, description, price } = destination;
+    for (let day = 0; day < totalDays; day++) {
+      const dayDestinations = allDestinations?.slice(day * 3, (day + 1) * 3);
+      const daySchedule = {
+        dayNumber: day + 1,
+        title: dayDestinations?.map((dest) => dest.name).join(" - "),
+        destinations: dayDestinations?.map((dest, index) => ({
+          ...dest,
+          session: getSession(index),
+        })),
+      };
+      schedule.push(daySchedule);
+    }
+    return schedule;
+  };
 
-  const toggleExpand = () => {
-    setIsExpanded(!isExpanded);
+  const getSession = (index) => {
+    switch (index) {
+      case 0:
+        return "Buổi sáng";
+      case 1:
+        return "Buổi chiều";
+      case 2:
+        return "Buổi tối";
+      default:
+        return "";
+    }
+  };
+
+  const daySchedule = getDaySchedule();
+  const filteredDestinations = useMemo(() => {
+    const startIndex = (activeDay - 1) * 3;
+    const endIndex = startIndex + 3;
+    return allDestinations?.slice(startIndex, endIndex).map((dest, index) => ({
+      ...dest,
+      session: getSession(index),
+    }));
+  }, [activeDay, allDestinations]);
+
+  const calculateDayTotal = (dayDestinations) => {
+    return dayDestinations.reduce((total, dest) => {
+      return total + (dest.price || 0);
+    }, 0);
   };
 
   return (
-    <>
-      <div className="header_img">
-        <img className="img" src={banner} alt="" />
-        <h1>Từ Đông Nam Á Đến Thế Giới, Trong Tầm Tay Bạn</h1>
-        <p>Rong chơi bốn phương, tìm kiếm "yêu thương"</p>
-      </div>
-      <SearchPopupComponent />
-
+    <div className="detail-destination">
       <div className="container">
-        <div className="title_linkPage">
-          <Link to="/">Home</Link>
-          <span>&gt;</span>
-          <a style={{textDecoration: "underline"}}>{name}</a>
-        </div>
-
-        <section className="info_destination_detail">
-          <h1 className="info_destination_detail_name">{name}</h1>
-          <div className="rating_wishlist">
-            <div className="rating_wishlist_left">
-              <span>4.6 / 5</span>
-              <img src="./assets/icon/star.svg" alt="" />
-            </div>
-            <div className="rating_wishlist_right">
-              <div className="wishlist_right">
-                <img src="./assets/icon/ph_heart-bold.svg" alt="" />
-                <a style={{ textDecoration: "underline" }} href="">
-                  Wishlist
-                </a>
-              </div>
-              <div className="share_right">
-                <svg
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M11.293 2.29303C11.4805 2.10556 11.7348 2.00024 12 2.00024C12.2652 2.00024 12.5195 2.10556 12.707 2.29303L15.707 5.29303C15.8892 5.48163 15.99 5.73424 15.9877 5.99643C15.9854 6.25863 15.8802 6.50944 15.6948 6.69485C15.5094 6.88026 15.2586 6.98543 14.9964 6.9877C14.7342 6.98998 14.4816 6.88919 14.293 6.70703L13 5.41403V15C13 15.2652 12.8946 15.5196 12.7071 15.7071C12.5196 15.8947 12.2652 16 12 16C11.7348 16 11.4804 15.8947 11.2929 15.7071C11.1054 15.5196 11 15.2652 11 15V5.41403L9.707 6.70703C9.5184 6.88919 9.2658 6.98998 9.0036 6.9877C8.7414 6.98543 8.49059 6.88026 8.30518 6.69485C8.11977 6.50944 8.0146 6.25863 8.01233 5.99643C8.01005 5.73424 8.11084 5.48163 8.293 5.29303L11.293 2.29303ZM4 11C4 10.4696 4.21071 9.96089 4.58579 9.58582C4.96086 9.21074 5.46957 9.00003 6 9.00003H8C8.26522 9.00003 8.51957 9.10539 8.70711 9.29292C8.89464 9.48046 9 9.73481 9 10C9 10.2652 8.89464 10.5196 8.70711 10.7071C8.51957 10.8947 8.26522 11 8 11H6V20H18V11H16C15.7348 11 15.4804 10.8947 15.2929 10.7071C15.1054 10.5196 15 10.2652 15 10C15 9.73481 15.1054 9.48046 15.2929 9.29292C15.4804 9.10539 15.7348 9.00003 16 9.00003H18C18.5304 9.00003 19.0391 9.21074 19.4142 9.58582C19.7893 9.96089 20 10.4696 20 11V20C20 20.5305 19.7893 21.0392 19.4142 21.4142C19.0391 21.7893 18.5304 22 18 22H6C5.46957 22 4.96086 21.7893 4.58579 21.4142C4.21071 21.0392 4 20.5305 4 20V11Z"
-                    fill="#1E1E1E"
-                  />
-                </svg>
-                <a
-                  style={{ textDecoration: "underline", marginTop: "4px" }}
-                  href=""
-                >
-                  Share
-                </a>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <Lightbox images={destination.image_url} />
-
-        {/* Phần mô tả có nút mở rộng */}
-        <section className="description_detail">
-          <div className="description">
-            <div
-              className={`description-container ${
-                isExpanded ? "expanded" : ""
-              }`}
-            >
-              <p style={{ whiteSpace: "pre-line" }}>{description}</p>
-            </div>
-
-            <button onClick={toggleExpand}>
-              {isExpanded ? "Thu gọn" : "Xem thêm"}
-            </button>
-          </div>
-
-          <div className="price-card">
-            <div className="price-card-header">
-              <span>Save up to 5%</span>
-            </div>
-            <div className="price-card-content">
-              <div className="price-card-content-wrapper">
-                <p>
-                  From <span className="price-original">₫1,685,000</span>
-                </p>
-                <h2 className="price-discount">
-                  {destination.price.toLocaleString()}₫
-                </h2>
-                <p className="price-unit">per person</p>
-              </div>
-              <button className="btn-check-availability">
-                Check availability
-              </button>
-            </div>
-          </div>
-        </section>
-
-        <section className="about_activity">
-          <h2 className="section-title">About this activity</h2>
-          <ul className="activity-list">
-            <li>
-              <div className="icon-container">🗺️</div>
-              <div className="activity-content">
-                <h3>Địa điểm</h3>
-                <p>{destination.location}</p>
-              </div>
-            </li>
-            
-            <li>
-              <div className="icon-container">📍</div>
-              <div className="activity-content">
-                <h3>VỊ trí</h3>
-                <p>{destination.place}</p>
-              </div>
-            </li>
-            <li>
-              <div className="icon-container">⏰</div>
-              <div className="activity-content">
-                <h3>Thời gian mở - đóng</h3>
-                <p>{destination.open_hours}</p>
-              </div>
-            </li>
-            <li>
-              <div className="icon-container">👨‍✈️</div>
-              <div className="activity-content">
-                <h3>Dịch vụ</h3>
-                <p>{destination.service}</p>
-              </div>
-            </li>
-            <li>
-              <div className="icon-container">🚍</div>
-              <div className="activity-content">
-                <h3>Khoảng cách</h3>
-                <p>{destination.distance}</p>
-              </div>
-            </li>
-          </ul>
-        </section>
-
-        {/* Thêm bản đồ hiển thị vị trí */}
-        <section className="map_section">
-          <h2 className="section-title">Location</h2>
-          <MapContainer
-            center={[lat, lng]}
-            zoom={13}
-            style={{ height: "400px", width: "100%" }}
-          >
-            <TileLayer
-              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            />
-            <Marker position={[lat, lng]}>
-              <Popup>{name}</Popup>
-            </Marker>
-          </MapContainer>
-        </section>
-
-        <section className="reviews-section">
-  <h2 className="section-title">Reviews from other travelers</h2>
-  <div className="reviews-container">
-    <div className="review-card">
-      <div className="review-header">
-        <span className="avatar">J</span>
         <div>
-          <p className="reviewer">Juhi — India</p>
-          <p className="review-date">November 17, 2024</p>
+          <h1 className="detail-destination-title">
+            Khám phá {currentDestination?.location}
+          </h1>
+          <p className="detail-destination-description">
+            {`Lịch trình ngày ${activeDay}`} tại {currentDestination?.location}.
+          </p>
+        </div>
+        <div className="section">
+          <div className="section-left">
+            <h2 className="section-left-title">Hành Trình</h2>
+            <div className="section-content">
+              {daySchedule
+                .filter((day) => day.dayNumber === activeDay)
+                .map((day) => (
+                  <div
+                    className={"section-left-item active"}
+                    key={day.dayNumber}
+                  >
+                    <h3 className="section-left-topic">
+                      Ngày {day.dayNumber}: {day.title}
+                    </h3>
+                    <div className="day-schedule">
+                      {day.destinations.map((dest) => (
+                        <div key={dest._id} className="schedule-item">
+                          <div className="schedule-details">
+                            <h4 className="schedule-time">{dest.session}:</h4>
+                            <p className="schedule-description">
+                              {dest.description || "Chưa có mô tả chi tiết"}
+                            </p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="total-price">
+                      <span className="total-price-title">Tổng chi phí: </span>
+                      <span className="total-price-value">
+                        {calculateDayTotal(day.destinations).toLocaleString()}đ
+                      </span>
+                    </div>
+                  </div>
+                ))}
+            </div>
+          </div>
+          <div className="section-right">
+            <h2 className="section-right-title">Chi Tiết</h2>
+            <div className="section-right-content">
+              {filteredDestinations?.map((destination) => (
+                <div className="section-right-item" key={destination._id}>
+                  <h3 className="section-right-topic">
+                    {destination.session}: {destination.name}
+                  </h3>
+                  <div className="section-right-clock">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="1em"
+                      height="1em"
+                      viewBox="0 0 24 24"
+                      className="section-clock-icon"
+                    >
+                      <path
+                        fill="currentColor"
+                        d="M12 20a7 7 0 0 1-7-7a7 7 0 0 1 7-7a7 7 0 0 1 7 7a7 7 0 0 1-7 7m0-16a9 9 0 0 0-9 9a9 9 0 0 0 9 9a9 9 0 0 0 9-9a9 9 0 0 0-9-9m.5 4H11v6l4.75 2.85l.75-1.23l-4-2.37zM7.88 3.39L6.6 1.86L2 5.71l1.29 1.53zM22 5.72l-4.6-3.86l-1.29 1.53l4.6 3.86z"
+                      />
+                    </svg>
+                    <span className="section-clock-open">
+                      {destination.open_hours}
+                    </span>
+                    <span className="section-clock-dash"> - </span>
+                    <span className="section-clock-close">
+                      {destination.close_hours}
+                    </span>
+                  </div>
+                  <div className="section-right-category">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="1em"
+                      height="1em"
+                      viewBox="0 0 24 24"
+                      className="section-category-icon"
+                    >
+                      <path
+                        fill="currentColor"
+                        d="M4 11h6a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1m10 0h6a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1h-6a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1M4 21h6a1 1 0 0 0 1-1v-6a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1m13 0c2.206 0 4-1.794 4-4s-1.794-4-4-4s-4 1.794-4 4s1.794 4 4 4"
+                      />
+                    </svg>
+                    <div className="section-category">
+                      <span className="section-category-text">Loại:</span>
+                      <span>{destination.category}</span>
+                    </div>
+                  </div>
+                  <div className="section-right-price">
+                    <svg
+                      version="1.0"
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="26px"
+                      height="26px"
+                      viewBox="0 0 512.000000 512.000000"
+                      preserveAspectRatio="xMidYMid meet"
+                      className="section-price-icon"
+                    >
+                      <g
+                        transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)"
+                        fill="#008ae6"
+                        stroke="none"
+                      >
+                        <path
+                          d="M3950 4189 c-36 -12 -792 -257 -1680 -546 -1400 -455 -1627 -526
+                        -1703 -534 -48 -4 -97 -14 -110 -20 -53 -27 -91 -65 -113 -113 l-24 -51 0
+                        -909 c0 -652 3 -919 11 -947 16 -50 61 -105 112 -132 l42 -22 1845 -3 c1313
+                        -2 1860 0 1896 8 34 7 66 23 93 46 79 68 75 41 81 582 l5 483 133 44 c74 24
+                        148 54 166 66 58 40 96 113 96 186 0 26 -491 1584 -546 1731 -46 125 -165 176
+                        -304 131z m129 -156 c16 -14 89 -229 291 -860 149 -463 270 -849 270 -858 0
+                        -36 -38 -55 -222 -111 -17 -5 -18 16 -18 353 0 201 -4 373 -10 393 -13 46 -63
+                        106 -109 129 l-36 19 -90 299 c-64 211 -99 311 -120 343 -39 58 -106 93 -178
+                        92 -63 0 -329 -84 -358 -113 -43 -43 -4 -129 58 -129 15 0 88 20 161 44 74 24
+                        142 41 153 39 11 -3 26 -15 34 -27 12 -18 165 -510 165 -529 0 -4 -261 -7
+                        -581 -7 l-581 0 -54 49 c-72 66 -143 93 -260 99 l-92 4 -11 39 c-21 69 -89 91
+                        -136 44 -27 -26 -31 -57 -15 -100 9 -23 7 -27 -17 -36 -15 -5 -55 -30 -89 -54
+                        l-63 -45 -508 1 -508 1 345 113 c190 62 590 193 890 290 300 97 626 203 725
+                        235 99 32 333 108 520 169 187 60 351 114 365 120 37 14 55 13 79 -6z m135
+                        -1104 l26 -20 0 -900 c0 -886 0 -899 -20 -919 -20 -20 -33 -20 -1854 -20
+                        l-1833 0 -27 21 -26 20 0 899 0 899 26 20 27 21 1827 0 1827 0 27 -21z"
+                        />
+                        <path
+                          d="M767 2796 c-57 -21 -103 -61 -128 -113 l-24 -48 0 -630 0 -630 22
+                        -41 c25 -47 73 -91 120 -111 23 -9 82 -13 201 -13 156 0 171 2 196 21 32 25
+                        35 75 7 110 -19 23 -25 24 -185 27 -165 3 -166 3 -186 29 -20 26 -20 35 -18
+                        621 l3 594 24 19 c21 17 40 19 176 19 139 0 155 2 179 21 32 25 35 75 7 110
+                        -19 23 -24 24 -188 26 -123 2 -178 -1 -206 -11z"
+                        />
+                        <path
+                          d="M2323 2798 c-24 -12 -41 -47 -45 -97 -3 -31 -7 -35 -58 -51 -79 -24
+                        -135 -55 -187 -103 -83 -76 -115 -148 -115 -252 1 -150 117 -283 294 -336 l68
+                        -21 0 -214 0 -214 -27 6 c-122 30 -212 118 -213 205 0 36 -28 68 -67 75 -27 5
+                        -37 1 -64 -25 -30 -30 -31 -35 -25 -84 10 -75 38 -129 97 -192 59 -62 158
+                        -117 244 -135 54 -11 55 -12 55 -45 0 -49 18 -82 52 -96 24 -10 35 -9 63 4 35
+                        17 42 32 47 96 3 31 7 35 58 51 126 39 229 120 277 219 39 79 39 181 0 263
+                        -48 99 -165 187 -290 219 l-47 11 0 215 0 215 28 -7 c105 -26 195 -101 207
+                        -172 11 -64 25 -91 56 -103 67 -28 117 29 104 117 -22 145 -162 275 -337 314
+                        l-58 12 0 44 c0 73 -55 111 -117 81z m-43 -498 l0 -199 -47 17 c-61 22 -138
+                        95 -151 144 -22 82 22 159 119 207 34 17 66 31 71 31 4 0 8 -90 8 -200z m279
+                        -437 c148 -106 100 -276 -96 -337 l-23 -7 0 200 0 200 41 -14 c22 -8 57 -27
+                        78 -42z"
+                        />
+                        <path
+                          d="M3585 2799 c-51 -29 -60 -85 -20 -124 24 -24 28 -25 180 -25 152 0
+                        156 -1 180 -25 l25 -24 0 -596 c0 -582 0 -595 -20 -615 -18 -18 -33 -20 -170
+                        -20 -189 0 -220 -12 -220 -86 0 -14 11 -36 25 -49 24 -25 27 -25 197 -25 146
+                        0 179 3 214 19 51 23 108 90 123 144 9 30 11 212 9 657 -3 608 -3 615 -25 655
+                        -24 46 -54 75 -103 101 -29 16 -62 19 -205 22 -113 1 -177 -2 -190 -9z"
+                        />
+                      </g>
+                    </svg>
+                    <div className="section-price">
+                      <span className="section-price-text">
+                        Giá: {destination.price?.toLocaleString()}
+                      </span>
+                      <span className="section-price-unit">đ</span>
+                    </div>
+                  </div>
+                  <div className="section-right-address">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 384 512"
+                      width="1.3em"
+                      height="1.3em"
+                      fill="#008ae6"
+                      className="section-address-icon"
+                    >
+                      <path d="M215.7 499.2C267 435 384 279.4 384 192C384 86 298 0 192 0S0 86 0 192c0 87.4 117 243 168.3 307.2c12.3 15.3 35.1 15.3 47.4 0zM192 128a64 64 0 1 1 0 128 64 64 0 1 1 0-128z" />
+                    </svg>
+                    <span className="section-address-text">
+                      Địa chỉ: {destination.location}
+                    </span>
+                  </div>
+                  <figure className="section-right-figure">
+                    <img
+                      src={destination.image || beach}
+                      alt={destination.name}
+                      className="section-right-img"
+                    />
+                  </figure>
+                  <p className="section-right-description">
+                    {destination.description || "Chưa có mô tả chi tiết"}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+        <div className="detail-destination-button">
+          <a href="" className="btn btn-detail-destination">
+            Book Now
+          </a>
         </div>
       </div>
-      <div className="review-stars">⭐⭐⭐⭐⭐</div>
-      <p className="review-content">
-        It was a great full day tour. Dao our tour guide managed everything
-        really well. Would definitely recommend taking this full day tour to
-        visit the golden bridge and bana hills. It was totally worth it.
-      </p>
     </div>
-    <div className="review-card">
-      <div className="review-header">
-        <span className="avatar">N</span>
-        <div>
-          <p className="reviewer">Nick — United States</p>
-          <p className="review-date">November 19, 2024</p>
-        </div>
-      </div>
-      <div className="review-stars">⭐⭐⭐⭐⭐</div>
-      <p className="review-content">
-        Dao was a great guide!! She was very informative and proactive in
-        ensuring that everyone enjoyed the trip.
-      </p>
-    </div>
-  </div>
-  <a href="#" className="see-more-reviews">
-    See more reviews
-  </a>
-</section>
-
-      </div>
-    </>
   );
 };
 
-export default DestinationDetail;
+export default DetailDestination;

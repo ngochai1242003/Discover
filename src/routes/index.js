@@ -1,4 +1,7 @@
 import Auth from "../components/Auth/Login";
+import FindDestination from "../components/DestinationFind/destinationFind.jsx";
+import ListDestination from "../components/destinationList/destinationList";
+import DetailDestination from "../components/DestinationDetail/DestinationDetail";
 import FilterResultsPage from "../pages/FilterResultsPage/FilterResultsPage";
 import Home from "../pages/HomePage/home";
 import NotFundPage from "../pages/NotFoundPage/NotFoundPage";
@@ -15,6 +18,7 @@ import WishlistComponent from "../components/WishlistComponent/WishlistComponent
 import ForgotPassword from "../components/Auth/Forgotpassword";
 import ModifyProfile from "../pages/ModifyProfile/ModifyProfile";
 
+
 export const routes = [
   {
     path: "/",
@@ -28,6 +32,21 @@ export const routes = [
   {
     path: "/search-results",
     page: SearchResultsPage,
+    isShowHeader: true,
+  },
+  {
+    path: "/findDestination",
+    page: FindDestination,
+    isShowHeader: true,
+  },
+  {
+    path: "/listDestination",
+    page: ListDestination,
+    isShowHeader: true,
+  },
+  {
+    path: "/detailDestination",
+    page: DetailDestination,
     isShowHeader: true,
   },
   {

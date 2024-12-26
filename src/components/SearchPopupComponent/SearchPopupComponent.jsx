@@ -215,7 +215,7 @@ const SearchPopupComponent = () => {
                   stroke-linejoin="round"
                 />
               </svg>
-              <a href="#thamquan">Tham quan</a>
+              <a href="/findDestination">Tham quan</a>
             </li>
           </ul>
         </div>
